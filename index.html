@@ -1,199 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jordan's Morning Briefing — 10 Jul 2026</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" crossorigin="anonymous"></script>
-<style>
-  :root{--bg:#0d0f14;--card:#151820;--card2:#1a1e28;--border:#252a38;--text:#e8eaf0;--sec:#7a8096;--muted:#4a5068;--green:#00c98d;--red:#ff4d6a;--amber:#f5a623;--blue:#4d9fff;--r:12px;--gap:16px}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px}
-  .wrap{max-width:1400px;margin:0 auto;padding:24px 20px}
-  .hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
-  h1{font-size:22px;font-weight:700;letter-spacing:-.3px}
-  .sub{font-size:13px;color:var(--sec);margin-top:3px}
-  .live{display:flex;align-items:center;gap:8px}
-  .dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-  .stamp{font-size:12px;color:var(--sec);background:var(--card);border:1px solid var(--border);border-radius:20px;padding:4px 12px}
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap);margin-bottom:var(--gap)}
-  .kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
-  .kpi-l{font-size:11px;color:var(--sec);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-  .kpi-v{font-size:26px;font-weight:700}
-  .kpi-s{font-size:12px;color:var(--sec);margin-top:4px}
-  .grid2{display:grid;grid-template-columns:1fr 360px;gap:var(--gap);margin-bottom:var(--gap)}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px}
-  .ct{font-size:11px;font-weight:600;color:var(--sec);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
-  table{width:100%;border-collapse:collapse}
-  thead th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding:6px 10px;text-align:right;border-bottom:1px solid var(--border)}
-  thead th:first-child{text-align:left}
-  tbody tr{border-bottom:1px solid #1e2230;transition:background .15s}
-  tbody tr:hover{background:var(--card2)}
-  td{padding:11px 10px;text-align:right;vertical-align:middle}
-  td:first-child{text-align:left}
-  .charts{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);margin-bottom:var(--gap)}
-  .ch{height:220px;position:relative}
-  .footer{text-align:center;font-size:11px;color:var(--muted);margin-top:24px;padding-top:16px;border-top:1px solid var(--border);line-height:1.7}
-  @media(max-width:900px){.grid2,.kpis,.charts{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div class="hdr">
-    <div>
-      <h1>📊 Good Morning, Jordan!</h1>
-      <div class="sub">Daily Market Briefing · Friday, 10 July 2026 — 07:21 PM MYT</div>
-    </div>
-    <div class="live">
-      <div class="dot"></div>
-      <span style="font-size:12px;color:var(--green);font-weight:500">LIVE</span>
-      <div class="stamp">Auto-generated 9:00 AM MYT</div>
-    </div>
-  </div>
-
-  <div class="kpis">
-    <div class="kpi"><div class="kpi-l">Winners Today</div><div class="kpi-v" style="color:var(--green)">0</div><div class="kpi-s">stocks up</div></div>
-    <div class="kpi"><div class="kpi-l">Losers Today</div><div class="kpi-v" style="color:var(--red)">0</div><div class="kpi-s">stocks down</div></div>
-    <div class="kpi"><div class="kpi-l">Biggest Mover</div><div class="kpi-v" style="color:var(--green)">AAPL +0.00%</div><div class="kpi-s">largest % move</div></div>
-    <div class="kpi"><div class="kpi-l">Stocks to Watch</div><div class="kpi-v" style="color:var(--amber)">↑ See below</div><div class="kpi-s">advisor picks</div></div>
-  </div>
-
-  <div class="grid2">
-    <div class="card">
-      <div class="ct">Your Watchlist — Live Prices</div>
-      <table>
-        <thead><tr><th>Stock</th><th>Price</th><th>Day Chg</th><th>Target</th><th>Upside</th><th>Analyst</th><th>Action</th></tr></thead>
-        <tbody>
-        <tr>
-          <td><strong style="color:#e8eaf0">AAPL</strong><div style="font-size:11px;color:#7a8096">Consumer Tech</div></td>
-          <td style="font-size:15px;font-weight:600">$0.00</td>
-          <td><span style="background:rgba(0,201,141,.15);color:#00c98d;padding:2px 8px;border-radius:10px;font-weight:600;font-size:12px">▲ 0.00%</span></td>
-          <td style="color:#7a8096;font-size:12px">$327</td>
-          <td style="color:#ff4d6a;font-size:12px;font-weight:600">—</td>
-          <td><span style="background:rgba(0,0,0,.3);color:#00c98d;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600">Buy</span></td>
-          <td><span style="background:rgba(0,0,0,.3);color:#f5a623;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700" title="Monitor">HOLD</span></td>
-        </tr>
-        <tr>
-          <td><strong style="color:#e8eaf0">AIFF</strong><div style="font-size:11px;color:#7a8096">Speculative</div></td>
-          <td style="font-size:15px;font-weight:600">$0.00</td>
-          <td><span style="background:rgba(0,201,141,.15);color:#00c98d;padding:2px 8px;border-radius:10px;font-weight:600;font-size:12px">▲ 0.00%</span></td>
-          <td style="color:#7a8096;font-size:12px">—</td>
-          <td style="color:#ff4d6a;font-size:12px;font-weight:600">—</td>
-          <td><span style="background:rgba(0,0,0,.3);color:#7a8096;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600">N/A</span></td>
-          <td><span style="background:rgba(0,0,0,.3);color:#ff4d6a;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700" title="Micro-cap, high risk">SPECULATIVE</span></td>
-        </tr>
-        <tr>
-          <td><strong style="color:#e8eaf0">AMD</strong><div style="font-size:11px;color:#7a8096">AI Infra & Chips</div></td>
-          <td style="font-size:15px;font-weight:600">$0.00</td>
-          <td><span style="background:rgba(0,201,141,.15);color:#00c98d;padding:2px 8px;border-radius:10px;font-weight:600;font-size:12px">▲ 0.00%</span></td>
-          <td style="color:#7a8096;font-size:12px">$491</td>
-          <td style="color:#ff4d6a;font-size:12px;font-weight:600">—</td>
-          <td><span style="background:rgba(0,0,0,.3);color:#00c98d;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600">Buy</span></td>
-          <td><span style="background:rgba(0,0,0,.3);color:#f5a623;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700" title="Monitor">HOLD</span></td>
-        </tr>
-        <tr>
-          <td><strong style="color:#e8eaf0">INTC</strong><div style="font-size:11px;color:#7a8096">AI Infra & Chips</div></td>
-          <td style="font-size:15px;font-weight:600">$0.00</td>
-          <td><span style="background:rgba(0,201,141,.15);color:#00c98d;padding:2px 8px;border-radius:10px;font-weight:600;font-size:12px">▲ 0.00%</span></td>
-          <td style="color:#7a8096;font-size:12px">—</td>
-          <td style="color:#ff4d6a;font-size:12px;font-weight:600">—</td>
-          <td><span style="background:rgba(0,0,0,.3);color:#f5a623;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600">Hold</span></td>
-          <td><span style="background:rgba(0,0,0,.3);color:#f5a623;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700" title="Turnaround uncertain">HOLD</span></td>
-        </tr>
-        <tr>
-          <td><strong style="color:#e8eaf0">KEYS</strong><div style="font-size:11px;color:#7a8096">Memory & Semis</div></td>
-          <td style="font-size:15px;font-weight:600">$0.00</td>
-          <td><span style="background:rgba(0,201,141,.15);color:#00c98d;padding:2px 8px;border-radius:10px;font-weight:600;font-size:12px">▲ 0.00%</span></td>
-          <td style="color:#7a8096;font-size:12px">$383</td>
-          <td style="color:#ff4d6a;font-size:12px;font-weight:600">—</td>
-          <td><span style="background:rgba(0,0,0,.3);color:#00c98d;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600">Buy</span></td>
-          <td><span style="background:rgba(0,0,0,.3);color:#f5a623;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700" title="Monitor">HOLD</span></td>
-        </tr>
-        <tr>
-          <td><strong style="color:#e8eaf0">META</strong><div style="font-size:11px;color:#7a8096">AI Software</div></td>
-          <td style="font-size:15px;font-weight:600">$0.00</td>
-          <td><span style="background:rgba(0,201,141,.15);color:#00c98d;padding:2px 8px;border-radius:10px;font-weight:600;font-size:12px">▲ 0.00%</span></td>
-          <td style="color:#7a8096;font-size:12px">$828</td>
-          <td style="color:#ff4d6a;font-size:12px;font-weight:600">—</td>
-          <td><span style="background:rgba(0,0,0,.3);color:#00c98d;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600">Buy</span></td>
-          <td><span style="background:rgba(0,0,0,.3);color:#f5a623;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700" title="Monitor">HOLD</span></td>
-        </tr>
-        <tr>
-          <td><strong style="color:#e8eaf0">MSFT</strong><div style="font-size:11px;color:#7a8096">Cloud & Enterprise</div></td>
-          <td style="font-size:15px;font-weight:600">$0.00</td>
-          <td><span style="background:rgba(0,201,141,.15);color:#00c98d;padding:2px 8px;border-radius:10px;font-weight:600;font-size:12px">▲ 0.00%</span></td>
-          <td style="color:#7a8096;font-size:12px">$551</td>
-          <td style="color:#ff4d6a;font-size:12px;font-weight:600">—</td>
-          <td><span style="background:rgba(0,0,0,.3);color:#00c98d;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600">Buy</span></td>
-          <td><span style="background:rgba(0,0,0,.3);color:#f5a623;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700" title="Watch earnings">HOLD</span></td>
-        </tr>
-        <tr>
-          <td><strong style="color:#e8eaf0">MU</strong><div style="font-size:11px;color:#7a8096">Memory & Semis</div></td>
-          <td style="font-size:15px;font-weight:600">$0.00</td>
-          <td><span style="background:rgba(0,201,141,.15);color:#00c98d;padding:2px 8px;border-radius:10px;font-weight:600;font-size:12px">▲ 0.00%</span></td>
-          <td style="color:#7a8096;font-size:12px">$1,180</td>
-          <td style="color:#ff4d6a;font-size:12px;font-weight:600">—</td>
-          <td><span style="background:rgba(0,0,0,.3);color:#00c98d;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600">Buy</span></td>
-          <td><span style="background:rgba(0,0,0,.3);color:#f5a623;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700" title="Monitor">HOLD</span></td>
-        </tr>
-        <tr>
-          <td><strong style="color:#e8eaf0">NVDA</strong><div style="font-size:11px;color:#7a8096">AI Infra & Chips</div></td>
-          <td style="font-size:15px;font-weight:600">$0.00</td>
-          <td><span style="background:rgba(0,201,141,.15);color:#00c98d;padding:2px 8px;border-radius:10px;font-weight:600;font-size:12px">▲ 0.00%</span></td>
-          <td style="color:#7a8096;font-size:12px">$317</td>
-          <td style="color:#ff4d6a;font-size:12px;font-weight:600">—</td>
-          <td><span style="background:rgba(0,0,0,.3);color:#00c98d;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600">Buy</span></td>
-          <td><span style="background:rgba(0,0,0,.3);color:#f5a623;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700" title="Monitor">HOLD</span></td>
-        </tr>
-        <tr>
-          <td><strong style="color:#e8eaf0">PLTR</strong><div style="font-size:11px;color:#7a8096">AI Software</div></td>
-          <td style="font-size:15px;font-weight:600">$0.00</td>
-          <td><span style="background:rgba(0,201,141,.15);color:#00c98d;padding:2px 8px;border-radius:10px;font-weight:600;font-size:12px">▲ 0.00%</span></td>
-          <td style="color:#7a8096;font-size:12px">$187</td>
-          <td style="color:#ff4d6a;font-size:12px;font-weight:600">—</td>
-          <td><span style="background:rgba(0,0,0,.3);color:#00c98d;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600">Buy</span></td>
-          <td><span style="background:rgba(0,0,0,.3);color:#f5a623;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700" title="Monitor">HOLD</span></td>
-        </tr></tbody>
-      </table>
-    </div>
-    <div class="card">
-      <div class="ct">📰 Today's Top News</div>
-      
-    </div>
-  </div>
-
-  <div class="charts">
-    <div class="card"><div class="ct">🧩 Sector Concentration</div><div class="ch"><canvas id="donut"></canvas></div></div>
-    <div class="card"><div class="ct">📊 Analyst Consensus (Buy / Hold / Sell)</div><div class="ch"><canvas id="analyst"></canvas></div></div>
-  </div>
-
-  <div class="footer">
-    🤖 Auto-generated by Jordan's AI Financial Advisor · Data via Financial Modeling Prep (FMP)<br>
-    ⚠️ This dashboard is for informational purposes only and does not constitute financial advice.<br>
-    Past performance does not guarantee future results. Always consult a licensed advisor before investing.
-  </div>
-</div>
-<script>
-const sColors = ['#a78bfa','#4d9fff','#7f77dd','#00c98d','#f5a623','#ff4d6a'];
-new Chart(document.getElementById('donut'),{
-  type:'doughnut',
-  data:{labels:["Consumer Tech", "Speculative", "AI Infra & Chips", "Memory & Semis", "AI Software", "Cloud & Enterprise"],datasets:[{data:[1, 1, 3, 2, 2, 1],backgroundColor:sColors,borderColor:'#0d0f14',borderWidth:3,hoverOffset:8}]},
-  options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'right',labels:{color:'#7a8096',font:{size:11},boxWidth:12,padding:10}}}}
-});
-const aSyms  = ["AAPL", "AMD", "INTC", "KEYS", "META", "MSFT", "MU", "NVDA", "PLTR"];
-const aBuys  = [70, 50, 31, 13, 52, 66, 40, 60, 12];
-const aHolds = [34, 20, 46, 4, 11, 16, 5, 16, 11];
-const aSells = [7, 0, 7, 0, 2, 0, 0, 3, 3];
-new Chart(document.getElementById('analyst'),{
-  type:'bar',
-  data:{labels:aSyms,datasets:[
-    {label:'Buy',data:aBuys,backgroundColor:'rgba(0,201,141,.8)',borderRadius:3},
-    {label:'Hold',data:aHolds,backgroundColor:'rgba(245,166,35,.8)',borderRadius:3},
-    {label:'Sell',data:aSells,backgroundColor:'rgba(255,77,106,.8)',borderRadius:3},
-  ]},
-  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#7a8096',font:{size:11}}}},scales:{x:{stacked:true,grid:{display:false},ticks:{color:'#7a8096',font:{size:10}}},y:{stacked:true,grid:{color:'#1e2230'},ticks:{color:'#7a8096',font:{size:10}}}}}
-});
-</script>
-</body>
-</html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jordan Market Briefing — 10 Jul 2026</title><script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" crossorigin="anonymous"></script><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f1117;--sb:#13151e;--card:#1a1d27;--card2:#1f2233;--bdr:#252a3a;--tx:#e8eaf0;--sec:#8b90a7;--mt:#4a5068;--gr:#00c98d;--rd:#ff4d6a;--am:#f5a623;--bl:#4d9fff;--r:10px;--g:14px}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;min-height:100vh}
+.topbar{background:var(--sb);border-bottom:1px solid var(--bdr);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.logo{font-size:16px;font-weight:700}
+.tr{display:flex;align-items:center;gap:10px}
+.lp{display:flex;align-items:center;gap:5px;background:rgba(0,201,141,.1);border:1px solid rgba(0,201,141,.25);border-radius:20px;padding:4px 10px;font-size:11px;color:var(--gr);font-weight:600}
+.dot{width:6px;height:6px;background:var(--gr);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.rbtn{display:flex;align-items:center;gap:5px;background:var(--gr);color:#000;border:none;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
+.rbtn:hover{background:#00b07a;transform:scale(1.03)}
+.rbtn:disabled{background:#1a2a20;color:var(--mt);cursor:not-allowed;transform:none}
+.spin{display:inline-block;animation:spin 1s linear infinite}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.ts{font-size:11px;color:var(--sec)}
+.ibar{display:flex;overflow-x:auto;background:var(--sb);border-bottom:1px solid var(--bdr);padding:0 24px}
+.ic{padding:10px 24px 10px 0;margin-right:24px;border-right:1px solid var(--bdr);flex-shrink:0}
+.ic:last-child{border-right:none}
+.in{font-size:11px;color:var(--sec);margin-bottom:2px}
+.ip{font-size:14px;font-weight:600}
+.ich{font-size:12px;font-weight:500;margin-top:1px}
+.layout{display:grid;grid-template-columns:280px 1fr;min-height:calc(100vh - 90px)}
+.sidebar{background:var(--sb);border-right:1px solid var(--bdr);padding:16px 0;overflow-y:auto}
+.sbs{padding:0 16px;margin-bottom:20px}
+.sbt{font-size:11px;font-weight:600;color:var(--sec);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;padding:0 4px}
+.sbi{display:flex;justify-content:space-between;align-items:center;padding:8px 4px;border-radius:8px;cursor:pointer;transition:background .15s}
+.sbi:hover{background:var(--card2)}
+.sl{display:flex;flex-direction:column;gap:2px}
+.ss{font-size:13px;font-weight:600;color:var(--tx)}
+.sn{font-size:11px;color:var(--sec)}
+.sr{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.sp{font-size:13px;font-weight:600}
+.spc{font-size:11px;font-weight:500}
+.main{padding:20px 24px;overflow-y:auto}
+.mt2{font-size:20px;font-weight:700;margin-bottom:4px}
+.ms{font-size:12px;color:var(--sec);margin-bottom:18px}
+.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--g);margin-bottom:20px}
+.kpi{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:14px 16px}
+.kl{font-size:11px;color:var(--sec);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.kv{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.ks{font-size:11px;color:var(--sec);margin-top:3px}
+.wg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--g);margin-bottom:20px}
+.wc{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:border-color .2s,transform .15s}
+.wc:hover{border-color:#4a5068;transform:translateY(-1px)}
+.wct{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.wcs{font-size:15px;font-weight:700}
+.wcn{font-size:11px;color:var(--sec);margin-top:1px}
+.wcse{font-size:10px;color:var(--mt);margin-top:2px}
+.wcp{font-size:20px;font-weight:700;letter-spacing:-.5px;margin-bottom:3px}
+.wcch{font-size:12px;font-weight:500;margin-bottom:8px}
+.wcm{display:flex;gap:5px;flex-wrap:wrap}
+.wctg{font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid;font-weight:600}
+.nc{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.nh{padding:12px 16px;border-bottom:1px solid var(--bdr);font-size:12px;font-weight:600;color:var(--sec);text-transform:uppercase;letter-spacing:.06em}
+.nr{display:grid;grid-template-columns:120px 1fr 90px;gap:10px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--bdr);transition:background .15s}
+.nr:last-child{border-bottom:none}
+.nr:hover{background:var(--card2)}
+.nll{display:flex;flex-direction:column;gap:3px}
+.nsym{font-size:11px;font-weight:700;color:var(--bl)}
+.nsnt{font-size:10px;font-weight:600}
+.ntitle{font-size:12px;color:var(--tx);line-height:1.45}
+.ntitle a{color:var(--tx);text-decoration:none}
+.ntitle a:hover{color:var(--bl)}
+.ndate{font-size:11px;color:var(--mt);text-align:right}
+.cr{display:grid;grid-template-columns:1fr 1fr;gap:var(--g);margin-bottom:20px}
+.cc{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:16px}
+.ctit{font-size:12px;font-weight:600;color:var(--sec);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.ch{height:200px;position:relative}
+.footer{background:var(--sb);border-top:1px solid var(--bdr);padding:14px 24px;font-size:11px;color:var(--mt);text-align:center;line-height:1.7}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{display:none}.krow,.cr{grid-template-columns:repeat(2,1fr)}.wg{grid-template-columns:repeat(2,1fr)}.nr{grid-template-columns:1fr}}
+</style></head><body><div class="topbar"><div class="logo">📊 Jordan's Market Briefing</div><div class="tr"><div class="ts">Friday, 10 July 2026 · 10:18 PM MYT</div><div class="lp"><div class="dot"></div>LIVE</div><button class="rbtn" id="rb" onclick="triggerRefresh()">🔄 Refresh</button></div></div><div class="ibar"><div class="ic"><div class="in">S&P 500</div><div class="ip">0.00</div><div class="ich" style="color:#00c98d">▲ 0.00%</div></div><div class="ic"><div class="in">Nasdaq</div><div class="ip">0.00</div><div class="ich" style="color:#00c98d">▲ 0.00%</div></div><div class="ic"><div class="in">Dow Jones</div><div class="ip">0.00</div><div class="ich" style="color:#00c98d">▲ 0.00%</div></div><div class="ic"><div class="in">VIX</div><div class="ip">0.00</div><div class="ich" style="color:#00c98d">▲ 0.00%</div></div></div><div class="layout"><div class="sidebar"><div class="sbs"><div class="sbt">Watchlist</div><div class="sbi"><div class="sl"><span class="ss">AAPL</span><span class="sn">Apple Inc</span></div><div class="sr"><span class="sp" style="color:#00c98d">$0.00</span><span class="spc" style="color:#00c98d">▲ 0.00%</span></div></div><div class="sbi"><div class="sl"><span class="ss">AIFF</span><span class="sn">Firefly Neuroscience</span></div><div class="sr"><span class="sp" style="color:#00c98d">$0.00</span><span class="spc" style="color:#00c98d">▲ 0.00%</span></div></div><div class="sbi"><div class="sl"><span class="ss">AMD</span><span class="sn">Advanced Micro Devic</span></div><div class="sr"><span class="sp" style="color:#00c98d">$0.00</span><span class="spc" style="color:#00c98d">▲ 0.00%</span></div></div><div class="sbi"><div class="sl"><span class="ss">INTC</span><span class="sn">Intel Corp</span></div><div class="sr"><span class="sp" style="color:#00c98d">$0.00</span><span class="spc" style="color:#00c98d">▲ 0.00%</span></div></div><div class="sbi"><div class="sl"><span class="ss">KEYS</span><span class="sn">Keysight Technologie</span></div><div class="sr"><span class="sp" style="color:#00c98d">$0.00</span><span class="spc" style="color:#00c98d">▲ 0.00%</span></div></div><div class="sbi"><div class="sl"><span class="ss">META</span><span class="sn">Meta Platforms</span></div><div class="sr"><span class="sp" style="color:#00c98d">$0.00</span><span class="spc" style="color:#00c98d">▲ 0.00%</span></div></div><div class="sbi"><div class="sl"><span class="ss">MSFT</span><span class="sn">Microsoft Corp</span></div><div class="sr"><span class="sp" style="color:#00c98d">$0.00</span><span class="spc" style="color:#00c98d">▲ 0.00%</span></div></div><div class="sbi"><div class="sl"><span class="ss">MU</span><span class="sn">Micron Technology</span></div><div class="sr"><span class="sp" style="color:#00c98d">$0.00</span><span class="spc" style="color:#00c98d">▲ 0.00%</span></div></div><div class="sbi"><div class="sl"><span class="ss">NVDA</span><span class="sn">NVIDIA Corp</span></div><div class="sr"><span class="sp" style="color:#00c98d">$0.00</span><span class="spc" style="color:#00c98d">▲ 0.00%</span></div></div><div class="sbi"><div class="sl"><span class="ss">PLTR</span><span class="sn">Palantir Technologie</span></div><div class="sr"><span class="sp" style="color:#00c98d">$0.00</span><span class="spc" style="color:#00c98d">▲ 0.00%</span></div></div></div></div><div class="main"><div class="mt2">Good Morning, Jordan! 👋</div><div class="ms">Your market snapshot for Friday, 10 July 2026</div><div class="krow"><div class="kpi"><div class="kl">Winners Today</div><div class="kv" style="color:#00c98d">0</div><div class="ks">stocks up</div></div><div class="kpi"><div class="kl">Losers Today</div><div class="kv" style="color:#ff4d6a">0</div><div class="ks">stocks down</div></div><div class="kpi"><div class="kl">Biggest Mover</div><div class="kv" style="color:#00c98d;font-size:18px">AAPL +0.00%</div><div class="ks">largest move</div></div><div class="kpi"><div class="kl">Advisor Alerts</div><div class="kv" style="color:#f5a623">↓ Below</div><div class="ks">check actions</div></div></div><div style="font-size:12px;font-weight:600;color:#8b90a7;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Your Watchlist</div><div class="wg"><div class="wc"><div class="wct"><div><div class="wcs">AAPL</div><div class="wcn">Apple Inc</div><div class="wcse">Consumer Tech</div></div><div><svg width="80" height="32" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00c98d" stop-opacity="0.3"/><stop offset="100%" stop-color="#00c98d" stop-opacity="0.02"/></linearGradient></defs><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0 L80.0,32 L0,32 Z" fill="url(#g0)"/><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0" fill="none" stroke="#00c98d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wcp">$0.00</div><div class="wcch" style="color:#00c98d">▲ 0.00% ($0.00)</div><div class="wcm"><span class="wctg" style="color:#00c98d;border-color:#00c98d33;background:#00c98d22">Buy</span><span class="wctg" style="color:#f5a623;border-color:#f5a62333;background:#f5a62322" title="Monitor">HOLD</span><span class="wctg" style="color:#ff4d6a">— upside</span></div></div><div class="wc"><div class="wct"><div><div class="wcs">AIFF</div><div class="wcn">Firefly Neuroscience</div><div class="wcse">Speculative</div></div><div><svg width="80" height="32" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00c98d" stop-opacity="0.3"/><stop offset="100%" stop-color="#00c98d" stop-opacity="0.02"/></linearGradient></defs><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0 L80.0,32 L0,32 Z" fill="url(#g0)"/><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0" fill="none" stroke="#00c98d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wcp">$0.00</div><div class="wcch" style="color:#00c98d">▲ 0.00% ($0.00)</div><div class="wcm"><span class="wctg" style="color:#7a8096;border-color:#7a809633;background:#7a809622">N/A</span><span class="wctg" style="color:#ff4d6a;border-color:#ff4d6a33;background:#ff4d6a22" title="Micro-cap, high risk">SPEC</span><span class="wctg" style="color:#ff4d6a">— upside</span></div></div><div class="wc"><div class="wct"><div><div class="wcs">AMD</div><div class="wcn">Advanced Micro Devices</div><div class="wcse">AI Infra & Chips</div></div><div><svg width="80" height="32" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00c98d" stop-opacity="0.3"/><stop offset="100%" stop-color="#00c98d" stop-opacity="0.02"/></linearGradient></defs><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0 L80.0,32 L0,32 Z" fill="url(#g0)"/><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0" fill="none" stroke="#00c98d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wcp">$0.00</div><div class="wcch" style="color:#00c98d">▲ 0.00% ($0.00)</div><div class="wcm"><span class="wctg" style="color:#00c98d;border-color:#00c98d33;background:#00c98d22">Buy</span><span class="wctg" style="color:#f5a623;border-color:#f5a62333;background:#f5a62322" title="Monitor">HOLD</span><span class="wctg" style="color:#ff4d6a">— upside</span></div></div><div class="wc"><div class="wct"><div><div class="wcs">INTC</div><div class="wcn">Intel Corp</div><div class="wcse">AI Infra & Chips</div></div><div><svg width="80" height="32" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00c98d" stop-opacity="0.3"/><stop offset="100%" stop-color="#00c98d" stop-opacity="0.02"/></linearGradient></defs><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0 L80.0,32 L0,32 Z" fill="url(#g0)"/><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0" fill="none" stroke="#00c98d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wcp">$0.00</div><div class="wcch" style="color:#00c98d">▲ 0.00% ($0.00)</div><div class="wcm"><span class="wctg" style="color:#f5a623;border-color:#f5a62333;background:#f5a62322">Hold</span><span class="wctg" style="color:#f5a623;border-color:#f5a62333;background:#f5a62322" title="Turnaround uncertain">HOLD</span><span class="wctg" style="color:#ff4d6a">— upside</span></div></div><div class="wc"><div class="wct"><div><div class="wcs">KEYS</div><div class="wcn">Keysight Technologies</div><div class="wcse">Memory & Semis</div></div><div><svg width="80" height="32" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00c98d" stop-opacity="0.3"/><stop offset="100%" stop-color="#00c98d" stop-opacity="0.02"/></linearGradient></defs><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0 L80.0,32 L0,32 Z" fill="url(#g0)"/><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0" fill="none" stroke="#00c98d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wcp">$0.00</div><div class="wcch" style="color:#00c98d">▲ 0.00% ($0.00)</div><div class="wcm"><span class="wctg" style="color:#00c98d;border-color:#00c98d33;background:#00c98d22">Buy</span><span class="wctg" style="color:#f5a623;border-color:#f5a62333;background:#f5a62322" title="Monitor">HOLD</span><span class="wctg" style="color:#ff4d6a">— upside</span></div></div><div class="wc"><div class="wct"><div><div class="wcs">META</div><div class="wcn">Meta Platforms</div><div class="wcse">AI Software</div></div><div><svg width="80" height="32" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00c98d" stop-opacity="0.3"/><stop offset="100%" stop-color="#00c98d" stop-opacity="0.02"/></linearGradient></defs><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0 L80.0,32 L0,32 Z" fill="url(#g0)"/><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0" fill="none" stroke="#00c98d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wcp">$0.00</div><div class="wcch" style="color:#00c98d">▲ 0.00% ($0.00)</div><div class="wcm"><span class="wctg" style="color:#00c98d;border-color:#00c98d33;background:#00c98d22">Buy</span><span class="wctg" style="color:#f5a623;border-color:#f5a62333;background:#f5a62322" title="Monitor">HOLD</span><span class="wctg" style="color:#ff4d6a">— upside</span></div></div><div class="wc"><div class="wct"><div><div class="wcs">MSFT</div><div class="wcn">Microsoft Corp</div><div class="wcse">Cloud & Enterprise</div></div><div><svg width="80" height="32" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00c98d" stop-opacity="0.3"/><stop offset="100%" stop-color="#00c98d" stop-opacity="0.02"/></linearGradient></defs><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0 L80.0,32 L0,32 Z" fill="url(#g0)"/><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0" fill="none" stroke="#00c98d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wcp">$0.00</div><div class="wcch" style="color:#00c98d">▲ 0.00% ($0.00)</div><div class="wcm"><span class="wctg" style="color:#00c98d;border-color:#00c98d33;background:#00c98d22">Buy</span><span class="wctg" style="color:#f5a623;border-color:#f5a62333;background:#f5a62322" title="Watch earnings">HOLD</span><span class="wctg" style="color:#ff4d6a">— upside</span></div></div><div class="wc"><div class="wct"><div><div class="wcs">MU</div><div class="wcn">Micron Technology</div><div class="wcse">Memory & Semis</div></div><div><svg width="80" height="32" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00c98d" stop-opacity="0.3"/><stop offset="100%" stop-color="#00c98d" stop-opacity="0.02"/></linearGradient></defs><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0 L80.0,32 L0,32 Z" fill="url(#g0)"/><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0" fill="none" stroke="#00c98d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wcp">$0.00</div><div class="wcch" style="color:#00c98d">▲ 0.00% ($0.00)</div><div class="wcm"><span class="wctg" style="color:#00c98d;border-color:#00c98d33;background:#00c98d22">Buy</span><span class="wctg" style="color:#f5a623;border-color:#f5a62333;background:#f5a62322" title="Monitor">HOLD</span><span class="wctg" style="color:#ff4d6a">— upside</span></div></div><div class="wc"><div class="wct"><div><div class="wcs">NVDA</div><div class="wcn">NVIDIA Corp</div><div class="wcse">AI Infra & Chips</div></div><div><svg width="80" height="32" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00c98d" stop-opacity="0.3"/><stop offset="100%" stop-color="#00c98d" stop-opacity="0.02"/></linearGradient></defs><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0 L80.0,32 L0,32 Z" fill="url(#g0)"/><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0" fill="none" stroke="#00c98d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wcp">$0.00</div><div class="wcch" style="color:#00c98d">▲ 0.00% ($0.00)</div><div class="wcm"><span class="wctg" style="color:#00c98d;border-color:#00c98d33;background:#00c98d22">Buy</span><span class="wctg" style="color:#f5a623;border-color:#f5a62333;background:#f5a62322" title="Monitor">HOLD</span><span class="wctg" style="color:#ff4d6a">— upside</span></div></div><div class="wc"><div class="wct"><div><div class="wcs">PLTR</div><div class="wcn">Palantir Technologies</div><div class="wcse">AI Software</div></div><div><svg width="80" height="32" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00c98d" stop-opacity="0.3"/><stop offset="100%" stop-color="#00c98d" stop-opacity="0.02"/></linearGradient></defs><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0 L80.0,32 L0,32 Z" fill="url(#g0)"/><path d="M0.0,16.0 L8.9,14.2 L17.8,12.9 L26.7,13.3 L35.6,14.6 L44.4,14.5 L53.3,15.0 L62.2,13.5 L71.1,14.5 L80.0,16.0" fill="none" stroke="#00c98d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wcp">$0.00</div><div class="wcch" style="color:#00c98d">▲ 0.00% ($0.00)</div><div class="wcm"><span class="wctg" style="color:#00c98d;border-color:#00c98d33;background:#00c98d22">Buy</span><span class="wctg" style="color:#f5a623;border-color:#f5a62333;background:#f5a62322" title="Monitor">HOLD</span><span class="wctg" style="color:#ff4d6a">— upside</span></div></div></div><div class="cr"><div class="cc"><div class="ctit">Sector Concentration</div><div class="ch"><canvas id="donut"></canvas></div></div><div class="cc"><div class="ctit">Analyst Consensus</div><div class="ch"><canvas id="analyst"></canvas></div></div></div><div class="nc"><div class="nh">📰 Latest News</div></div></div></div><div class="footer">🤖 Auto-generated by Jordan's AI Financial Advisor · Data via FMP · Updates weekdays 9:00 AM MYT<br>⚠️ Not financial advice.</div><script>
+const sc=['#a78bfa','#4d9fff','#7f77dd','#00c98d','#f5a623','#ff4d6a'];
+new Chart(document.getElementById('donut'),{type:'doughnut',data:{labels:["Consumer Tech", "Speculative", "AI Infra & Chips", "Memory & Semis", "AI Software", "Cloud & Enterprise"],datasets:[{data:[1, 1, 3, 2, 2, 1],backgroundColor:sc,borderColor:'#0f1117',borderWidth:3,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'right',labels:{color:'#8b90a7',font:{size:10},boxWidth:10,padding:8}}}}});
+new Chart(document.getElementById('analyst'),{type:'bar',data:{labels:["AAPL", "AMD", "INTC", "KEYS", "META", "MSFT", "MU", "NVDA", "PLTR"],datasets:[{label:'Buy',data:[70, 50, 31, 13, 52, 66, 40, 60, 12],backgroundColor:'rgba(0,201,141,.8)',borderRadius:3},{label:'Hold',data:[34, 20, 46, 4, 11, 16, 5, 16, 11],backgroundColor:'rgba(245,166,35,.8)',borderRadius:3},{label:'Sell',data:[7, 0, 7, 0, 2, 0, 0, 3, 3],backgroundColor:'rgba(255,77,106,.8)',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8b90a7',font:{size:10},boxWidth:10}}},scales:{x:{stacked:true,grid:{display:false},ticks:{color:'#8b90a7',font:{size:10}}},y:{stacked:true,grid:{color:'rgba(37,42,58,.8)'},ticks:{color:'#8b90a7',font:{size:10}}}}}});
+async function triggerRefresh(){
+  const btn=document.getElementById('rb');
+  btn.disabled=true;btn.innerHTML='<span class="spin">🔄</span> Refreshing...';
+  try{
+    const token=prompt('Paste your GitHub Personal Access Token:');
+    if(!token){btn.disabled=false;btn.innerHTML='🔄 Refresh';return;}
+    const r=await fetch('https://api.github.com/repos/jordan828/jordan-dashboard/actions/workflows/daily-briefing.yml/dispatches',{method:'POST',headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({ref:'main'})});
+    if(r.status===204){btn.innerHTML='⏳ Wait 30s';setTimeout(()=>{btn.innerHTML='✅ Reload now!';btn.disabled=false;},35000);}
+    else{btn.innerHTML='❌ Check token';setTimeout(()=>{btn.innerHTML='🔄 Refresh';btn.disabled=false;},3000);}
+  }catch(e){btn.innerHTML='❌ Error';setTimeout(()=>{btn.innerHTML='🔄 Refresh';btn.disabled=false;},3000);}
+}
+</script></body></html>
