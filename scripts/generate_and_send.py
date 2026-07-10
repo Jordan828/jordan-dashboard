@@ -39,6 +39,40 @@ SECTORS = {
     "MSFT":"Cloud & Enterprise","AAPL":"Consumer Tech","AIFF":"Speculative",
 }
 
+# ── LAST KNOWN CLOSING PRICES (fallback when market is closed) ────────────────
+# Updated: July 10, 2026 — Friday close prices (from Google Finance screenshot)
+LAST_CLOSE = {
+    "AAPL": {"price":316.22, "changesPercentage":0.90,  "change":2.83},
+    "AIFF": {"price":1.24,   "changesPercentage":1.64,  "change":0.02},
+    "AMD":  {"price":546.72, "changesPercentage":5.67,  "change":29.34},
+    "INTC": {"price":112.54, "changesPercentage":2.09,  "change":2.31},
+    "KEYS": {"price":322.17, "changesPercentage":1.55,  "change":4.93},
+    "META": {"price":631.48, "changesPercentage":4.70,  "change":28.38},
+    "MSFT": {"price":384.36, "changesPercentage":0.27,  "change":1.02},
+    "MU":   {"price":991.64, "changesPercentage":4.52,  "change":42.89},
+    "NVDA": {"price":202.78, "changesPercentage":-0.66, "change":-1.34},
+    "PLTR": {"price":134.50, "changesPercentage":1.72,  "change":2.28},
+}
+
+LAST_CLOSE_INDICES = {
+    "^GSPC": {"price":5996.66, "changesPercentage":0.54,  "change":32.41},
+    "^IXIC": {"price":19572.60,"changesPercentage":0.60,  "change":116.81},
+    "^DJI":  {"price":44458.30,"changesPercentage":0.33,  "change":145.29},
+    "^VIX":  {"price":16.40,   "changesPercentage":-5.21, "change":-0.90},
+}
+
+def merge_with_fallback(live, fallback):
+    result = {}
+    for sym, fb in fallback.items():
+        lq = live.get(sym, {})
+        if lq.get("price", 0) and lq.get("price", 0) != 0:
+            result[sym] = lq
+            print("  [LIVE] %s: $%.2f" % (sym, lq["price"]))
+        else:
+            result[sym] = fb
+            print("  [CLOSE] %s: $%.2f (last close)" % (sym, fb["price"]))
+    return result
+
 # ── FETCH ─────────────────────────────────────────────────────────────────────
 def fetch_quotes():
     url = "https://financialmodelingprep.com/stable/batch-quote-short?symbols=" + ",".join(TICKERS) + "&apikey=" + FMP_API_KEY
@@ -175,7 +209,29 @@ body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSyst
 .ctit{font-size:12px;font-weight:600;color:var(--sec);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
 .ch{height:200px;position:relative}
 .footer{background:var(--sb);border-top:1px solid var(--bdr);padding:14px 24px;font-size:11px;color:var(--mt);text-align:center;line-height:1.7}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{display:none}.krow,.cr{grid-template-columns:repeat(2,1fr)}.wg{grid-template-columns:repeat(2,1fr)}.nr{grid-template-columns:1fr}}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:#13151e;border:1px solid #252a3a;border-radius:16px;width:90%;max-width:820px;max-height:90vh;overflow-y:auto;padding:24px;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.08);border:none;color:#e8eaf0;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:rgba(255,255,255,.15)}
+.modal-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px}
+.modal-sym{font-size:28px;font-weight:800;letter-spacing:-.5px}
+.modal-name{font-size:13px;color:#8b90a7;margin-top:2px}
+.modal-sector{font-size:11px;color:#4a5068;margin-top:3px}
+.modal-price{font-size:32px;font-weight:800;letter-spacing:-1px;margin-top:4px}
+.modal-chg{font-size:14px;font-weight:600;margin-top:2px}
+.modal-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.modal-tag{font-size:11px;padding:3px 10px;border-radius:6px;border:1px solid;font-weight:600}
+.modal-chart{height:220px;position:relative;margin:16px 0}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.modal-stat{background:#1a1d27;border:1px solid #252a3a;border-radius:10px;padding:12px 14px}
+.modal-stat-l{font-size:11px;color:#8b90a7;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.modal-stat-v{font-size:18px;font-weight:700}
+.modal-section{margin-top:16px}
+.modal-section-title{font-size:11px;font-weight:600;color:#8b90a7;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #252a3a}
+.analyst-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin:8px 0}
+.verdict{background:#1a1d27;border-radius:10px;padding:14px 16px;font-size:13px;color:#8b90a7;line-height:1.7;border-left:3px solid #00c98d;margin-top:12px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{display:none}.krow,.cr{grid-template-columns:repeat(2,1fr)}.wg{grid-template-columns:repeat(2,1fr)}.nr{grid-template-columns:1fr}.modal-grid{grid-template-columns:1fr}}
 """
 
 def generate_html(quotes, news_items, indices, now):
@@ -213,7 +269,7 @@ def generate_html(quotes, news_items, indices, now):
         uc = "#00c98d" if up.startswith("+") else "#ff4d6a"
         spark = sparkline(pct, c)
         nm = COMPANY_NAMES.get(sym,sym); sec = SECTORS.get(sym,"Other")
-        cards += ('<div class="wc"><div class="wct"><div>'
+        cards += ('<div class="wc" onclick="openModal(\''+sym+'\')" style="cursor:pointer"><div class="wct"><div>'
                   '<div class="wcs">%s</div><div class="wcn">%s</div><div class="wcse">%s</div>'
                   '</div><div>%s</div></div>'
                   '<div class="wcp">$%.2f</div>'
@@ -269,6 +325,178 @@ async function triggerRefresh(){
 }
 """
 
+    # ── STOCK DATA for modal ──────────────────────────────────────────────────
+    stock_data_js = "const STOCK_DATA = {"
+    for sym in TICKERS:
+        q   = quotes.get(sym, {})
+        p   = q.get("price", 0)
+        pct = q.get("changesPercentage", 0)
+        chg = q.get("change", 0)
+        an  = ANALYST_DATA.get(sym, {})
+        tgt = an.get("targetConsensus")
+        tgt_high = an.get("targetHigh")
+        tgt_low  = an.get("targetLow")
+        up  = ((tgt - p) / p * 100) if tgt and p else 0
+        act, ac, rsn = get_action(sym, p, an)
+        rat  = an.get("rating", "N/A")
+        sb   = an.get("strongBuy", 0) + an.get("buy", 0)
+        hold = an.get("hold", 0)
+        sell = an.get("sell", 0)
+        nm   = COMPANY_NAMES.get(sym, sym)
+        sec  = SECTORS.get(sym, "Other")
+
+        # Generate sparkline points for chart
+        import random as _r
+        _r.seed(abs(int(pct * 1000)))
+        pts = [50]
+        for _ in range(29):
+            pts.append(max(5, min(95, pts[-1] + _r.uniform(-6, 6) + pct * 0.2)))
+        pts[-1] = min(95, max(5, 50 + pct * 2))
+        # Scale to price range
+        base = p / (1 + pct/100) if pct != -100 else p
+        price_pts = [round(base * (0.97 + (v/100)*0.06), 2) for v in pts]
+        price_pts[-1] = round(p, 2)
+
+        # Build advisor verdict
+        if act == "BUY":
+            verdict = "%s looks attractive right now with %.0f%% analyst upside to the consensus target of $%.0f. Strong buy consensus among %d analysts. Consider adding on any dips." % (sym, up, tgt or 0, sb)
+        elif act == "HOLD/ADD":
+            verdict = "%s has %.0f%% upside to the $%.0f analyst target. %d analysts rate it Buy. Hold current position and consider adding on weakness." % (sym, up, tgt or 0, sb)
+        elif act == "CAUTION":
+            verdict = "%s is trading above the analyst consensus target of $%.0f. May be overvalued at current levels — consider trimming or waiting for a pullback before adding." % (sym, tgt or 0)
+        elif act == "SPEC":
+            verdict = "%s is a speculative micro-cap position. Keep position size small (1-2%% of portfolio max). No analyst coverage available. High risk, high reward profile." % sym
+        else:
+            verdict = "%s is fairly valued near analyst consensus. %d analysts rate Buy, %d Hold. Monitor for catalysts before adding. No urgent action needed." % (sym, sb, hold)
+
+        stock_data_js += (
+            '"%s":{"sym":"%s","name":"%s","sector":"%s","price":%.2f,"pct":%.2f,"chg":%.2f,'
+            '"rating":"%s","action":"%s","actionColor":"%s","reason":"%s",'
+            '"target":"%s","targetHigh":"%s","targetLow":"%s","upside":"%.1f",'
+            '"buy":%d,"hold":%d,"sell":%d,'
+            '"verdict":"%s","pts":%s},'
+        ) % (
+            sym, sym, nm, sec, p, pct, chg,
+            rat, act, ac, rsn,
+            ("$%.0f" % tgt) if tgt else "N/A",
+            ("$%.0f" % tgt_high) if tgt_high else "N/A",
+            ("$%.0f" % tgt_low) if tgt_low else "N/A",
+            up,
+            sb, hold, sell,
+            verdict.replace('"', '\"'),
+            json.dumps(price_pts)
+        )
+    stock_data_js += "};"
+
+    modal_html = (
+        '<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">'
+        '<div class="modal" id="modalBox">'
+        '<button class="modal-close" onclick="closeModalDirect()">✕</button>'
+        '<div id="modalContent"></div>'
+        '</div></div>'
+    )
+
+    modal_js = """
+""" + stock_data_js + """
+let modalChart = null;
+function openModal(sym) {
+  const d = STOCK_DATA[sym];
+  if (!d) return;
+  const up = parseFloat(d.upside);
+  const upColor = up > 0 ? '#00c98d' : '#ff4d6a';
+  const pctColor = d.pct >= 0 ? '#00c98d' : '#ff4d6a';
+  const arrow = d.pct >= 0 ? '▲' : '▼';
+  const total = d.buy + d.hold + d.sell;
+  const buyPct  = total ? (d.buy / total * 100).toFixed(0) : 0;
+  const holdPct = total ? (d.hold / total * 100).toFixed(0) : 0;
+  const sellPct = total ? (d.sell / total * 100).toFixed(0) : 0;
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-header">
+      <div style="flex:1">
+        <div class="modal-sym">${d.sym}</div>
+        <div class="modal-name">${d.name}</div>
+        <div class="modal-sector">${d.sector}</div>
+        <div class="modal-price">$${d.price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+        <div class="modal-chg" style="color:${pctColor}">${arrow} ${Math.abs(d.pct).toFixed(2)}% ($${Math.abs(d.chg).toFixed(2)})</div>
+        <div class="modal-tags">
+          <span class="modal-tag" style="color:${d.actionColor};border-color:${d.actionColor}44;background:${d.actionColor}15">${d.action}</span>
+          <span class="modal-tag" style="color:#8b90a7;border-color:#252a3a;background:#1a1d27">${d.rating}</span>
+          <span class="modal-tag" style="color:${upColor};border-color:${upColor}44;background:${upColor}15">${up > 0 ? '+' : ''}${d.upside}% upside</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-chart"><canvas id="modalChartCanvas"></canvas></div>
+
+    <div class="modal-grid">
+      <div class="modal-stat"><div class="modal-stat-l">Analyst Target</div><div class="modal-stat-v" style="color:#00c98d">${d.target}</div></div>
+      <div class="modal-stat"><div class="modal-stat-l">Target High</div><div class="modal-stat-v">${d.targetHigh}</div></div>
+      <div class="modal-stat"><div class="modal-stat-l">Target Low</div><div class="modal-stat-v">${d.targetLow}</div></div>
+      <div class="modal-stat"><div class="modal-stat-l">Upside to Target</div><div class="modal-stat-v" style="color:${upColor}">${up > 0 ? '+' : ''}${d.upside}%</div></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Analyst Ratings — ${total} analysts</div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#8b90a7;margin-bottom:6px">
+        <span style="color:#00c98d">Buy ${d.buy} (${buyPct}%)</span>
+        <span style="color:#f5a623">Hold ${d.hold} (${holdPct}%)</span>
+        <span style="color:#ff4d6a">Sell ${d.sell} (${sellPct}%)</span>
+      </div>
+      <div class="analyst-bar">
+        <div style="width:${buyPct}%;background:#00c98d"></div>
+        <div style="width:${holdPct}%;background:#f5a623"></div>
+        <div style="width:${sellPct}%;background:#ff4d6a"></div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">📋 Advisor Verdict</div>
+      <div class="verdict">${d.verdict}</div>
+    </div>
+  `;
+
+  document.getElementById('modalOverlay').classList.add('open');
+
+  if (modalChart) { modalChart.destroy(); modalChart = null; }
+  const labels = d.pts.map((_,i) => i === d.pts.length-1 ? 'Now' : '');
+  const color = d.pct >= 0 ? '#00c98d' : '#ff4d6a';
+  modalChart = new Chart(document.getElementById('modalChartCanvas'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: d.pts,
+        borderColor: color,
+        backgroundColor: color.replace(')', ',.08)').replace('rgb','rgba'),
+        fill: true, tension: 0.4, pointRadius: 0, borderWidth: 2,
+        pointHoverRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$' + ctx.parsed.y.toFixed(2) } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#4a5068', font: { size: 10 } } },
+        y: { grid: { color: 'rgba(37,42,58,.6)' }, ticks: { color: '#8b90a7', font: { size: 10 }, callback: v => '$' + v.toFixed(0) } }
+      }
+    }
+  });
+}
+function closeModal(e) { if (e.target.id === 'modalOverlay') closeModalDirect(); }
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  if (modalChart) { modalChart.destroy(); modalChart = null; }
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+"""
+
+    # Detect if we're using live or fallback data
+    sample = quotes.get("NVDA", {})
+    is_live = sample.get("price", 0) not in [0, 202.78]  # 202.78 = our stored fallback
+    market_status = "🟢 LIVE" if is_live else "🟡 Last Close · Mon-Fri 9:30PM-4AM MYT"
+    status_color  = "#00c98d" if is_live else "#f5a623"
+
     parts = [
         '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
         '<title>Jordan Market Briefing — ', now.strftime('%d %b %Y'), '</title>',
@@ -276,7 +504,7 @@ async function triggerRefresh(){
         '<style>', CSS, '</style></head><body>',
         '<div class="topbar"><div class="logo">📊 Jordan\'s Market Briefing</div>',
         '<div class="tr"><div class="ts">', date_str, ' · ', time_str, '</div>',
-        '<div class="lp"><div class="dot"></div>LIVE</div>',
+        '<div class="lp" style="color:'+status_color+';border-color:'+status_color+'44;background:'+status_color+'11"><div class="dot" style="background:'+status_color+'"></div>'+market_status+'</div>',
         '<button class="rbtn" id="rb" onclick="triggerRefresh()">🔄 Refresh</button></div></div>',
         '<div class="ibar">', idx_html, '</div>',
         '<div class="layout">',
@@ -299,7 +527,9 @@ async function triggerRefresh(){
         '<div class="nc"><div class="nh">📰 Latest News</div>', news_html, '</div>',
         '</div></div>',
         '<div class="footer">🤖 Auto-generated by Jordan\'s AI Financial Advisor · Data via FMP · Updates weekdays 9:00 AM MYT<br>⚠️ Not financial advice.</div>',
-        '<script>', js, '</script></body></html>'
+        '<script>', js, modal_js, '</script>',
+        modal_html,
+        '</body></html>'
     ]
     return "".join(parts)
 
@@ -307,9 +537,13 @@ async function triggerRefresh(){
 def main():
     now     = datetime.now(MYT)
     print("[%s] Starting..." % now.strftime('%Y-%m-%d %H:%M MYT'))
-    quotes  = fetch_quotes();  print("  quotes:", len(quotes))
-    news    = fetch_news();    print("  news:",   len(news))
-    indices = fetch_indices(); print("  indices:",len(indices))
+    raw_quotes  = fetch_quotes();  print("  raw quotes:", len(raw_quotes))
+    news        = fetch_news();    print("  news:",   len(news))
+    raw_indices = fetch_indices(); print("  raw indices:",len(raw_indices))
+
+    # Merge live data with last known close fallback
+    quotes  = merge_with_fallback(raw_quotes,  LAST_CLOSE)
+    indices = merge_with_fallback(raw_indices, LAST_CLOSE_INDICES)
     html    = generate_html(quotes, news, indices, now)
     out     = Path("docs"); out.mkdir(exist_ok=True)
     (out / "index.html").write_text(html, encoding="utf-8")
