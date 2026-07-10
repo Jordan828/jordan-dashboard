@@ -140,6 +140,7 @@ def sparkline(pct, color, w=80, h=32):
 
 # ── HTML ──────────────────────────────────────────────────────────────────────
 CSS = """
+[data-theme="light"]{--bg:#f0f2f7;--sb:#ffffff;--card:#ffffff;--card2:#f4f6fb;--bdr:#e2e6f0;--tx:#1a1d2e;--sec:#5a6080;--mt:#9ba3c0}
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#0f1117;--sb:#13151e;--card:#1a1d27;--card2:#1f2233;--bdr:#252a3a;--tx:#e8eaf0;--sec:#8b90a7;--mt:#4a5068;--gr:#00c98d;--rd:#ff4d6a;--am:#f5a623;--bl:#4d9fff;--r:10px;--g:14px}
 body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;min-height:100vh}
@@ -155,6 +156,8 @@ body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSyst
 .spin{display:inline-block;animation:spin 1s linear infinite}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .ts{font-size:11px;color:var(--sec)}
+.tbtn{background:rgba(255,255,255,.08);border:1px solid var(--bdr);color:var(--sec);border-radius:20px;padding:5px 11px;font-size:11px;cursor:pointer;transition:all .2s;flex-shrink:0}
+.tbtn:hover{border-color:var(--gr);color:var(--gr)}
 .ibar{display:flex;overflow-x:auto;background:var(--sb);border-bottom:1px solid var(--bdr);padding:0 24px}
 .ic{padding:10px 24px 10px 0;margin-right:24px;border-right:1px solid var(--bdr);flex-shrink:0}
 .ic:last-child{border-right:none}
@@ -309,6 +312,10 @@ def generate_html(quotes, news_items, indices, now):
     tc = "#00c98d" if tp>=0 else "#ff4d6a"
 
     js = """
+let _theme=localStorage.getItem('dash_theme')||'dark';
+function applyDashTheme(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️ Light':'🌙 Dark';localStorage.setItem('dash_theme',t);}
+function toggleTheme(){_theme=_theme==='dark'?'light':'dark';applyDashTheme(_theme);}
+applyDashTheme(_theme);
 const sc=['#a78bfa','#4d9fff','#7f77dd','#00c98d','#f5a623','#ff4d6a'];
 new Chart(document.getElementById('donut'),{type:'doughnut',data:{labels:"""+sl+""",datasets:[{data:"""+sc2+""",backgroundColor:sc,borderColor:'#0f1117',borderWidth:3,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'right',labels:{color:'#8b90a7',font:{size:10},boxWidth:10,padding:8}}}}});
 new Chart(document.getElementById('analyst'),{type:'bar',data:{labels:"""+asy+""",datasets:[{label:'Buy',data:"""+ab+""",backgroundColor:'rgba(0,201,141,.8)',borderRadius:3},{label:'Hold',data:"""+ah+""",backgroundColor:'rgba(245,166,35,.8)',borderRadius:3},{label:'Sell',data:"""+ase+""",backgroundColor:'rgba(255,77,106,.8)',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8b90a7',font:{size:10},boxWidth:10}}},scales:{x:{stacked:true,grid:{display:false},ticks:{color:'#8b90a7',font:{size:10}}},y:{stacked:true,grid:{color:'rgba(37,42,58,.8)'},ticks:{color:'#8b90a7',font:{size:10}}}}}});
@@ -505,6 +512,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDi
         '<div class="topbar"><div class="logo">📊 Jordan\'s Market Briefing</div>',
         '<div class="tr"><div class="ts">', date_str, ' · ', time_str, '</div>',
         '<div class="lp" style="color:'+status_color+';border-color:'+status_color+'44;background:'+status_color+'11"><div class="dot" style="background:'+status_color+'"></div>'+market_status+'</div>',
+        '<button class="tbtn" id="themeBtn" onclick="toggleTheme()">☀️ Light</button>',
         '<button class="rbtn" id="rb" onclick="triggerRefresh()">🔄 Refresh</button></div></div>',
         '<div class="ibar">', idx_html, '</div>',
         '<div class="layout">',
