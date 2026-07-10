@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jordan's Dashboard — Loading...</title>
+<style>
+  body { background: #0d0f14; color: #e8eaf0; font-family: -apple-system, sans-serif;
+         display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; }
+  h1 { font-size: 22px; margin-bottom: 12px; }
+  p  { color: #7a8096; font-size: 14px; }
+  .dot { width: 10px; height: 10px; background: #00c98d; border-radius: 50%;
+         display: inline-block; margin: 16px 4px 0; animation: pulse 1.2s infinite; }
+  .dot:nth-child(2) { animation-delay: .2s; }
+  .dot:nth-child(3) { animation-delay: .4s; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.7)} }
+</style>
+</head>
+<body>
+  <div>
+    <h1>📊 Jordan's Morning Briefing</h1>
+    <p>Your dashboard will be auto-generated and updated here<br>every weekday at 9:00 AM Malaysia Time.</p>
+    <p style="margin-top:16px">First run will appear after GitHub Actions completes setup.</p>
+    <div><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  </div>
+</body>
+</html>

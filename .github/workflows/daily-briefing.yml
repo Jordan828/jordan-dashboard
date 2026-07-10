@@ -1,0 +1,37 @@
+name: Jordan's Daily Market Briefing
+
+on:
+  schedule:
+    # 9:00 AM Malaysia Time (MYT) = 1:00 AM UTC (UTC+8)
+    - cron: '0 1 * * 1-5'   # Monday–Friday only
+  workflow_dispatch:         # Manual trigger anytime from GitHub UI
+
+jobs:
+  send-briefing:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Generate dashboard
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: python scripts/generate_and_send.py
+
+      - name: Deploy dashboard to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
