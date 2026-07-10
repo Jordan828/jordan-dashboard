@@ -1,171 +1,175 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Jordan — Command Center</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" crossorigin="anonymous"></script>
 <style>
-/* ── TOKENS ──────────────────────────────────────────────────────────────── */
-:root {
-  --bg:      #090b10;
-  --surface: #0f1117;
-  --card:    #13161f;
-  --card2:   #181c27;
-  --border:  #1f2435;
-  --border2: #252a3a;
-  --tx:      #e8eaf0;
-  --tx2:     #8b90a7;
-  --tx3:     #4a5068;
-  --green:   #00c98d;
-  --red:     #ff4d6a;
-  --amber:   #f5a623;
-  --blue:    #4d9fff;
-  --purple:  #a78bfa;
-  --r:       12px;
-  --r2:      8px;
-  --gap:     16px;
+/* ── DARK THEME ── */
+[data-theme="dark"] {
+  --bg:#090b10; --surface:#0f1117; --card:#13161f; --card2:#181c27;
+  --border:#1f2435; --border2:#252a3a;
+  --tx:#e8eaf0; --tx2:#8b90a7; --tx3:#4a5068;
+  --focus-bg:linear-gradient(135deg,#0f1a2e,#111827);
+  --focus-border:rgba(77,159,255,.2);
+  --shadow:0 2px 12px rgba(0,0,0,.4);
 }
-*  { box-sizing:border-box; margin:0; padding:0; }
-body { background:var(--bg); color:var(--tx); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size:14px; min-height:100vh; }
-a  { color:var(--blue); text-decoration:none; }
-button { cursor:pointer; border:none; outline:none; }
-input,textarea,select { outline:none; font-family:inherit; font-size:14px; }
+/* ── LIGHT THEME ── */
+[data-theme="light"] {
+  --bg:#f0f2f7; --surface:#ffffff; --card:#ffffff; --card2:#f4f6fb;
+  --border:#e2e6f0; --border2:#d0d5e8;
+  --tx:#1a1d2e; --tx2:#5a6080; --tx3:#9ba3c0;
+  --focus-bg:linear-gradient(135deg,#e8f0fe,#f0f4ff);
+  --focus-border:rgba(77,159,255,.3);
+  --shadow:0 2px 12px rgba(0,0,0,.08);
+}
+/* ── BASE ── */
+:root { --green:#00c98d; --red:#ff4d6a; --amber:#f5a623; --blue:#4d9fff; --purple:#a78bfa; --r:12px; --r2:8px; --gap:16px; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--bg); color:var(--tx); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size:14px; min-height:100vh; transition:background .25s,color .25s; }
+a { color:var(--blue); text-decoration:none; }
+button { cursor:pointer; border:none; outline:none; font-family:inherit; }
+input,textarea,select { outline:none; font-family:inherit; font-size:13px; }
 
-/* ── TOPBAR ──────────────────────────────────────────────────────────────── */
-.topbar { background:var(--surface); border-bottom:1px solid var(--border); height:52px; padding:0 24px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
-.topbar-logo { font-size:15px; font-weight:700; display:flex; align-items:center; gap:8px; }
+/* ── TOPBAR ── */
+.topbar { background:var(--surface); border-bottom:1px solid var(--border); height:52px; padding:0 20px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; box-shadow:var(--shadow); gap:12px; }
+.topbar-logo { font-size:15px; font-weight:700; white-space:nowrap; flex-shrink:0; }
 .topbar-logo span { color:var(--tx2); font-weight:400; font-size:13px; }
-.topbar-right { display:flex; align-items:center; gap:12px; }
-.clock-myt { font-size:12px; color:var(--tx2); }
+.topbar-right { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.clock-myt { font-size:12px; color:var(--tx2); white-space:nowrap; }
 .clock-myt b { color:var(--tx); }
-.market-pill { display:flex; align-items:center; gap:5px; border-radius:20px; padding:4px 10px; font-size:11px; font-weight:600; border:1px solid; }
-.market-open   { background:rgba(0,201,141,.1); border-color:rgba(0,201,141,.25); color:var(--green); }
+.market-pill { display:flex; align-items:center; gap:5px; border-radius:20px; padding:4px 10px; font-size:11px; font-weight:600; border:1px solid; white-space:nowrap; flex-shrink:0; }
+.market-open { background:rgba(0,201,141,.1); border-color:rgba(0,201,141,.25); color:var(--green); }
 .market-closed { background:rgba(245,166,35,.1); border-color:rgba(245,166,35,.25); color:var(--amber); }
-.dot { width:6px; height:6px; border-radius:50%; animation:pulse 2s infinite; }
+.dot { width:6px; height:6px; border-radius:50%; animation:pulse 2s infinite; flex-shrink:0; }
 @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
-.dash-link { background:var(--green); color:#000; border-radius:20px; padding:5px 12px; font-size:11px; font-weight:700; transition:all .2s; display:flex; align-items:center; gap:5px; }
+.theme-btn { background:var(--card2); border:1px solid var(--border2); color:var(--tx2); border-radius:20px; padding:5px 11px; font-size:12px; transition:all .2s; flex-shrink:0; }
+.theme-btn:hover { border-color:var(--blue); color:var(--blue); }
+.dash-link { background:var(--green); color:#000 !important; border-radius:20px; padding:5px 12px; font-size:11px; font-weight:700; transition:all .2s; white-space:nowrap; flex-shrink:0; }
 .dash-link:hover { background:#00b07a; transform:scale(1.03); }
 
-/* ── LAYOUT ──────────────────────────────────────────────────────────────── */
-.layout { display:grid; grid-template-columns:260px 1fr 300px; gap:var(--gap); padding:20px; max-width:1600px; margin:0 auto; }
+/* ── LAYOUT ── */
+.layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr); gap:var(--gap); padding:20px; max-width:1500px; margin:0 auto; align-items:start; }
 
-/* ── CARDS ───────────────────────────────────────────────────────────────── */
-.card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:16px 18px; margin-bottom:var(--gap); }
+/* ── CARDS ── */
+.card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:16px; margin-bottom:var(--gap); box-shadow:var(--shadow); overflow:hidden; }
 .card-title { font-size:11px; font-weight:600; color:var(--tx2); text-transform:uppercase; letter-spacing:.07em; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; }
-.card-title-icon { font-size:13px; }
 
-/* ── FOCUS BOX ───────────────────────────────────────────────────────────── */
-.focus-card { background:linear-gradient(135deg,#0f1a2e,#111827); border:1px solid rgba(77,159,255,.2); border-radius:var(--r); padding:18px; margin-bottom:var(--gap); }
+/* ── FOCUS ── */
+.focus-card { background:var(--focus-bg); border:1px solid var(--focus-border); border-radius:var(--r); padding:16px; margin-bottom:var(--gap); }
 .focus-label { font-size:10px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
-.focus-input { background:transparent; border:none; color:var(--tx); font-size:17px; font-weight:600; width:100%; placeholder-color:var(--tx3); }
+.focus-input { background:transparent; border:none; color:var(--tx); font-size:16px; font-weight:600; width:100%; }
 .focus-input::placeholder { color:var(--tx3); }
 .focus-sub { font-size:11px; color:var(--tx3); margin-top:6px; }
 
-/* ── TASKS ───────────────────────────────────────────────────────────────── */
-.task-input-row { display:flex; gap:8px; margin-bottom:12px; }
-.task-input { background:var(--card2); border:1px solid var(--border2); border-radius:var(--r2); padding:8px 12px; color:var(--tx); flex:1; }
-.task-input::placeholder { color:var(--tx3); }
-.btn-add { background:var(--blue); color:#fff; border-radius:var(--r2); padding:8px 14px; font-size:12px; font-weight:600; transition:all .15s; }
+/* ── STATS ── */
+.stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:var(--gap); }
+.stat-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:10px; text-align:center; }
+.stat-val { font-size:20px; font-weight:700; letter-spacing:-.5px; }
+.stat-lbl { font-size:9px; color:var(--tx3); text-transform:uppercase; letter-spacing:.05em; margin-top:3px; }
+
+/* ── INPUTS ── */
+.inp { background:var(--card2); border:1px solid var(--border2); border-radius:var(--r2); padding:8px 10px; color:var(--tx); width:100%; transition:border-color .15s; }
+.inp:focus { border-color:var(--blue); }
+.inp::placeholder { color:var(--tx3); }
+.sel { background:var(--card2); border:1px solid var(--border2); border-radius:var(--r2); padding:8px 8px; color:var(--tx2); font-size:12px; }
+.btn-add { background:var(--blue); color:#fff; border-radius:var(--r2); padding:8px 12px; font-size:12px; font-weight:600; transition:all .15s; white-space:nowrap; flex-shrink:0; }
 .btn-add:hover { background:#3a8de8; }
-.task-priority { background:var(--card2); border:1px solid var(--border2); border-radius:var(--r2); padding:8px 10px; color:var(--tx2); font-size:12px; }
-.task-list { display:flex; flex-direction:column; gap:6px; max-height:260px; overflow-y:auto; }
-.task-item { display:flex; align-items:center; gap:10px; padding:9px 10px; background:var(--card2); border-radius:var(--r2); border:1px solid var(--border); transition:all .15s; }
-.task-item.done { opacity:.45; }
-.task-item.done .task-text { text-decoration:line-through; color:var(--tx3); }
-.task-check { width:16px; height:16px; border-radius:4px; border:1.5px solid var(--border2); background:transparent; appearance:none; cursor:pointer; flex-shrink:0; transition:all .15s; }
+
+/* ── TASK ── */
+.task-input-row { display:flex; gap:6px; margin-bottom:12px; align-items:center; }
+.task-input-row .inp { min-width:0; flex:1; }
+.task-list { display:flex; flex-direction:column; gap:6px; max-height:240px; overflow-y:auto; }
+.task-item { display:flex; align-items:center; gap:8px; padding:8px 10px; background:var(--card2); border-radius:var(--r2); border:1px solid var(--border); }
+.task-item.done { opacity:.4; }
+.task-item.done .task-text { text-decoration:line-through; }
+.task-check { width:15px; height:15px; border-radius:3px; border:1.5px solid var(--border2); background:transparent; appearance:none; cursor:pointer; flex-shrink:0; }
 .task-check:checked { background:var(--green); border-color:var(--green); }
-.task-text { flex:1; font-size:13px; }
-.task-badge { font-size:10px; padding:1px 6px; border-radius:4px; font-weight:600; flex-shrink:0; }
-.p-high   { background:rgba(255,77,106,.15);  color:var(--red);    }
-.p-medium { background:rgba(245,166,35,.15);  color:var(--amber);  }
-.p-low    { background:rgba(77,159,255,.15);  color:var(--blue);   }
-.task-del { background:none; color:var(--tx3); font-size:14px; padding:0 4px; transition:color .15s; }
-.task-del:hover { color:var(--red); }
+.task-text { flex:1; font-size:12px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.task-badge { font-size:9px; padding:2px 5px; border-radius:4px; font-weight:700; flex-shrink:0; }
+.p-high { background:rgba(255,77,106,.15); color:var(--red); }
+.p-medium { background:rgba(245,166,35,.15); color:var(--amber); }
+.p-low { background:rgba(77,159,255,.15); color:var(--blue); }
+.del-btn { background:none; color:var(--tx3); font-size:13px; padding:0 2px; flex-shrink:0; transition:color .15s; }
+.del-btn:hover { color:var(--red); }
 
-/* ── REMINDERS ───────────────────────────────────────────────────────────── */
-.reminder-input-row { display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
-.reminder-input { background:var(--card2); border:1px solid var(--border2); border-radius:var(--r2); padding:8px 12px; color:var(--tx); flex:1; min-width:120px; }
-.reminder-input::placeholder { color:var(--tx3); }
-.reminder-time { background:var(--card2); border:1px solid var(--border2); border-radius:var(--r2); padding:8px 10px; color:var(--tx2); font-size:12px; }
-.reminder-list { display:flex; flex-direction:column; gap:6px; max-height:200px; overflow-y:auto; }
-.reminder-item { display:flex; align-items:center; gap:10px; padding:9px 12px; background:var(--card2); border-radius:var(--r2); border-left:3px solid var(--purple); }
-.reminder-time-badge { font-size:11px; color:var(--purple); font-weight:600; flex-shrink:0; }
-.reminder-text { flex:1; font-size:13px; }
-.reminder-del { background:none; color:var(--tx3); font-size:14px; }
-.reminder-del:hover { color:var(--red); }
+/* ── REMINDERS ── */
+.reminder-add { display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap; }
+.reminder-add .inp { flex:1; min-width:100px; }
+.reminder-list { display:flex; flex-direction:column; gap:6px; max-height:180px; overflow-y:auto; }
+.reminder-item { display:flex; align-items:center; gap:8px; padding:8px 10px; background:var(--card2); border-radius:var(--r2); border-left:3px solid var(--purple); }
+.r-time { font-size:11px; color:var(--purple); font-weight:600; flex-shrink:0; }
+.r-text { flex:1; font-size:12px; }
 
-/* ── NOTES ───────────────────────────────────────────────────────────────── */
-.note-tabs { display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap; }
+/* ── NOTES ── */
+.note-tabs { display:flex; gap:5px; margin-bottom:10px; flex-wrap:wrap; }
 .note-tab { padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600; border:1px solid var(--border2); background:transparent; color:var(--tx2); transition:all .15s; }
 .note-tab.active { background:var(--blue); border-color:var(--blue); color:#fff; }
-.note-textarea { background:var(--card2); border:1px solid var(--border2); border-radius:var(--r2); padding:10px 12px; color:var(--tx); width:100%; min-height:140px; resize:vertical; line-height:1.6; }
-.note-textarea::placeholder { color:var(--tx3); }
-.note-save-row { display:flex; justify-content:space-between; align-items:center; margin-top:8px; }
-.note-saved { font-size:11px; color:var(--green); opacity:0; transition:opacity .3s; }
-.note-saved.show { opacity:1; }
+.note-area { background:var(--card2); border:1px solid var(--border2); border-radius:var(--r2); padding:10px; color:var(--tx); width:100%; min-height:130px; resize:vertical; line-height:1.6; font-size:13px; }
+.note-area::placeholder { color:var(--tx3); }
+.note-footer { display:flex; justify-content:space-between; align-items:center; margin-top:8px; }
+.saved-tag { font-size:11px; color:var(--green); opacity:0; transition:opacity .3s; }
+.saved-tag.show { opacity:1; }
 .btn-save { background:var(--card2); border:1px solid var(--border2); color:var(--tx2); border-radius:var(--r2); padding:6px 12px; font-size:11px; font-weight:600; transition:all .15s; }
 .btn-save:hover { border-color:var(--blue); color:var(--blue); }
 
-/* ── HABITS ──────────────────────────────────────────────────────────────── */
+/* ── HABITS ── */
 .habit-grid { display:flex; flex-direction:column; gap:8px; }
-.habit-row { display:flex; align-items:center; gap:10px; }
-.habit-name { font-size:12px; color:var(--tx2); width:100px; flex-shrink:0; }
-.habit-dots { display:flex; gap:4px; flex:1; }
-.habit-dot { width:20px; height:20px; border-radius:4px; border:1.5px solid var(--border2); background:transparent; cursor:pointer; transition:all .15s; flex-shrink:0; }
+.habit-row { display:flex; align-items:center; gap:6px; overflow:hidden; }
+.habit-name { font-size:11px; width:80px; flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.habit-dots { display:flex; gap:3px; flex:1; }
+.habit-dot { width:18px; height:18px; border-radius:4px; border:1.5px solid var(--border2); background:transparent; cursor:pointer; transition:all .15s; flex-shrink:0; }
 .habit-dot.done { border-color:transparent; }
-.habit-streak { font-size:11px; color:var(--tx3); flex-shrink:0; width:40px; text-align:right; }
-.habit-add-row { display:flex; gap:8px; margin-top:10px; }
-.habit-add-input { background:var(--card2); border:1px solid var(--border2); border-radius:var(--r2); padding:7px 10px; color:var(--tx); flex:1; font-size:12px; }
-.habit-add-input::placeholder { color:var(--tx3); }
+.habit-streak { font-size:10px; color:var(--tx3); flex-shrink:0; width:32px; text-align:right; }
+.habit-add { display:flex; gap:6px; margin-top:10px; }
+.habit-add .inp { font-size:12px; }
 
-/* ── GOALS ───────────────────────────────────────────────────────────────── */
+/* ── GOALS ── */
 .goal-list { display:flex; flex-direction:column; gap:8px; }
-.goal-item { background:var(--card2); border-radius:var(--r2); padding:10px 12px; }
-.goal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
-.goal-name { font-size:12px; font-weight:600; }
-.goal-pct  { font-size:11px; color:var(--tx2); }
-.goal-bar  { height:5px; background:var(--border); border-radius:3px; overflow:hidden; margin-bottom:4px; }
+.goal-item { background:var(--card2); border-radius:var(--r2); padding:10px; }
+.goal-hdr { display:flex; justify-content:space-between; margin-bottom:5px; }
+.goal-nm { font-size:12px; font-weight:600; }
+.goal-pc { font-size:11px; }
+.goal-bar { height:5px; background:var(--border); border-radius:3px; overflow:hidden; margin-bottom:4px; }
 .goal-fill { height:100%; border-radius:3px; transition:width .4s; }
-.goal-meta { font-size:10px; color:var(--tx3); display:flex; justify-content:space-between; }
-.goal-add-row { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
-.goal-add-input { background:var(--card2); border:1px solid var(--border2); border-radius:var(--r2); padding:7px 10px; color:var(--tx); flex:1; font-size:12px; min-width:100px; }
-.goal-add-input::placeholder { color:var(--tx3); }
+.goal-meta { font-size:10px; color:var(--tx3); display:flex; justify-content:space-between; align-items:center; }
+.goal-meta input { background:transparent; border:none; color:var(--tx2); width:50px; font-size:10px; }
+.goal-add { display:flex; gap:5px; margin-top:10px; flex-wrap:wrap; }
+.goal-add .inp { flex:1; min-width:80px; font-size:12px; }
 
-/* ── MARKET WIDGET ───────────────────────────────────────────────────────── */
-.market-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); cursor:pointer; transition:background .15s; border-radius:6px; padding:8px 6px; }
-.market-row:last-child { border-bottom:none; }
-.market-row:hover { background:var(--card2); }
-.mkt-left { display:flex; flex-direction:column; gap:2px; }
-.mkt-sym  { font-size:13px; font-weight:700; }
-.mkt-name { font-size:10px; color:var(--tx3); }
-.mkt-right { display:flex; flex-direction:column; align-items:flex-end; gap:2px; }
+/* ── MARKET ── */
+.mkt-row { display:flex; justify-content:space-between; align-items:center; padding:8px 6px; border-radius:var(--r2); border-bottom:1px solid var(--border); transition:background .15s; }
+.mkt-row:last-child { border-bottom:none; }
+.mkt-row:hover { background:var(--card2); }
+.mkt-sym { font-size:13px; font-weight:700; }
+.mkt-nm { font-size:10px; color:var(--tx3); }
 .mkt-price { font-size:13px; font-weight:600; }
-.mkt-chg   { font-size:11px; font-weight:600; padding:1px 6px; border-radius:6px; }
-.mkt-up    { background:rgba(0,201,141,.12); color:var(--green); }
-.mkt-dn    { background:rgba(255,77,106,.12); color:var(--red);   }
-.view-all  { display:block; text-align:center; margin-top:10px; font-size:12px; color:var(--blue); padding:8px; border-radius:var(--r2); border:1px solid rgba(77,159,255,.2); background:rgba(77,159,255,.05); transition:all .15s; }
+.mkt-chg { font-size:11px; font-weight:600; padding:1px 6px; border-radius:6px; }
+.mkt-up { background:rgba(0,201,141,.12); color:var(--green); }
+.mkt-dn { background:rgba(255,77,106,.12); color:var(--red); }
+.view-all { display:block; text-align:center; margin-top:10px; font-size:12px; color:var(--blue); padding:8px; border-radius:var(--r2); border:1px solid rgba(77,159,255,.2); background:rgba(77,159,255,.05); }
 .view-all:hover { background:rgba(77,159,255,.1); }
 
-/* ── STATS ROW ───────────────────────────────────────────────────────────── */
-.stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:var(--gap); }
-.stat-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:12px 14px; text-align:center; }
-.stat-val  { font-size:22px; font-weight:700; letter-spacing:-.5px; }
-.stat-lbl  { font-size:10px; color:var(--tx3); text-transform:uppercase; letter-spacing:.05em; margin-top:3px; }
+/* ── LINKS ── */
+.link-item { display:flex; align-items:center; gap:6px; margin-bottom:6px; }
+.link-a { flex:1; padding:8px 10px; background:var(--card2); border-radius:var(--r2); border:1px solid var(--border2); color:var(--tx); font-size:12px; transition:border-color .15s; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.link-a:hover { border-color:var(--blue); }
+.link-add { display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+.link-add .inp { flex:1; min-width:80px; font-size:12px; }
 
-/* ── SCROLLBARS ──────────────────────────────────────────────────────────── */
+/* ── SCROLLBARS ── */
 ::-webkit-scrollbar { width:4px; height:4px; }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
 
-/* ── RESPONSIVE ──────────────────────────────────────────────────────────── */
-@media(max-width:1100px){ .layout{ grid-template-columns:1fr 1fr; } }
-@media(max-width:720px){  .layout{ grid-template-columns:1fr; } }
+/* ── RESPONSIVE ── */
+@media(max-width:1200px) { .layout { grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
+@media(max-width:740px)  { .layout { grid-template-columns:minmax(0,1fr); } .topbar-right { gap:6px; } .clock-myt { display:none; } }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-logo">⚡ Jordan <span>/ Command Center</span></div>
   <div class="topbar-right">
@@ -174,441 +178,311 @@ input,textarea,select { outline:none; font-family:inherit; font-size:14px; }
       <div class="dot" id="marketDot"></div>
       <span id="marketStatus">Checking...</span>
     </div>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️ Light</button>
     <a class="dash-link" href="https://jordan828.github.io/jordan-dashboard/" target="_blank">📊 Market Briefing ↗</a>
   </div>
 </div>
 
 <div class="layout">
 
-<!-- ── LEFT COLUMN ─────────────────────────────────────────────────────── -->
-<div class="left-col">
-
-  <!-- DAILY FOCUS -->
+<!-- LEFT -->
+<div>
   <div class="focus-card">
     <div class="focus-label">Today's Focus</div>
     <input class="focus-input" id="focusInput" placeholder="What's the one thing that matters today?" maxlength="120">
-    <div class="focus-sub" id="focusSub">Press Enter to save</div>
+    <div class="focus-sub" id="focusSub">Type and it saves automatically</div>
   </div>
 
-  <!-- STATS -->
   <div class="stats-row">
-    <div class="stat-card"><div class="stat-val" id="statTasks" style="color:var(--blue)">0</div><div class="stat-lbl">Tasks Done</div></div>
-    <div class="stat-card"><div class="stat-val" id="statHabits" style="color:var(--green)">0</div><div class="stat-lbl">Habits Today</div></div>
-    <div class="stat-card"><div class="stat-val" id="statGoals" style="color:var(--purple)">0%</div><div class="stat-lbl">Goals Avg</div></div>
+    <div class="stat-card"><div class="stat-val" id="statTasks" style="color:var(--blue)">0</div><div class="stat-lbl">Done</div></div>
+    <div class="stat-card"><div class="stat-val" id="statHabits" style="color:var(--green)">0</div><div class="stat-lbl">Habits</div></div>
+    <div class="stat-card"><div class="stat-val" id="statGoals" style="color:var(--purple)">0%</div><div class="stat-lbl">Goals</div></div>
   </div>
 
-  <!-- TASKS -->
   <div class="card">
-    <div class="card-title"><span>✅ Tasks</span><span class="card-title-icon" id="taskCount" style="color:var(--tx3)">0 left</span></div>
+    <div class="card-title"><span>✅ Tasks</span><span id="taskCount" style="color:var(--tx3);font-size:10px">0 left</span></div>
     <div class="task-input-row">
-      <input class="task-input" id="taskInput" placeholder="Add a task..." maxlength="100">
-      <select class="task-priority" id="taskPriority">
-        <option value="high">🔴 High</option>
-        <option value="medium" selected>🟡 Medium</option>
-        <option value="low">🔵 Low</option>
+      <input class="inp" id="taskInput" placeholder="Add a task..." maxlength="100">
+      <select class="sel" id="taskPriority">
+        <option value="high">🔴</option>
+        <option value="medium" selected>🟡</option>
+        <option value="low">🔵</option>
       </select>
       <button class="btn-add" onclick="addTask()">Add</button>
     </div>
     <div class="task-list" id="taskList"></div>
   </div>
 
-  <!-- REMINDERS -->
   <div class="card">
-    <div class="card-title"><span>🔔 Reminders</span></div>
-    <div class="reminder-input-row">
-      <input class="reminder-input" id="reminderInput" placeholder="Add a reminder..." maxlength="100">
-      <input class="reminder-time reminder-input" type="time" id="reminderTime" style="width:110px;flex:none">
+    <div class="card-title">🔔 Reminders</div>
+    <div class="reminder-add">
+      <input class="inp" id="reminderInput" placeholder="Add a reminder..." maxlength="100">
+      <input class="inp" type="time" id="reminderTime" style="width:100px;flex:none">
       <button class="btn-add" onclick="addReminder()">Add</button>
     </div>
     <div class="reminder-list" id="reminderList"></div>
   </div>
-
 </div>
 
-<!-- ── MIDDLE COLUMN ────────────────────────────────────────────────────── -->
-<div class="mid-col">
-
-  <!-- NOTES -->
+<!-- MIDDLE -->
+<div>
   <div class="card">
-    <div class="card-title"><span>📝 Notes</span></div>
+    <div class="card-title">📝 Notes</div>
     <div class="note-tabs" id="noteTabs">
       <button class="note-tab active" onclick="switchNote(0,this)">General</button>
       <button class="note-tab" onclick="switchNote(1,this)">Trading Ideas</button>
       <button class="note-tab" onclick="switchNote(2,this)">Dev Log</button>
       <button class="note-tab" onclick="switchNote(3,this)">Goals</button>
     </div>
-    <textarea class="note-textarea" id="noteArea" placeholder="Start writing..."></textarea>
-    <div class="note-save-row">
-      <span class="note-saved" id="noteSaved">✓ Saved</span>
-      <button class="btn-save" onclick="saveNote()">Save note</button>
+    <textarea class="note-area" id="noteArea" placeholder="Start writing..."></textarea>
+    <div class="note-footer">
+      <span class="saved-tag" id="noteSaved">✓ Saved</span>
+      <button class="btn-save" onclick="saveNote()">Save (Ctrl+S)</button>
     </div>
   </div>
 
-  <!-- HABIT TRACKER -->
   <div class="card">
-    <div class="card-title"><span>🔁 Habit Tracker</span><span style="font-size:10px;color:var(--tx3)" id="habitDate"></span></div>
+    <div class="card-title"><span>🔁 Habit Tracker</span><span style="font-size:10px;color:var(--tx3)">Last 7 days</span></div>
     <div class="habit-grid" id="habitGrid"></div>
-    <div class="habit-add-row">
-      <input class="habit-add-input" id="habitInput" placeholder="Add a habit (e.g. Read 30min)">
-      <button class="btn-add" onclick="addHabit()" style="font-size:12px;padding:7px 12px">Add</button>
+    <div class="habit-add">
+      <input class="inp" id="habitInput" placeholder="Add a habit...">
+      <button class="btn-add" onclick="addHabit()">Add</button>
     </div>
   </div>
 
-  <!-- GOALS -->
   <div class="card">
-    <div class="card-title"><span>🎯 Goals</span></div>
+    <div class="card-title">🎯 Goals</div>
     <div class="goal-list" id="goalList"></div>
-    <div class="goal-add-row">
-      <input class="goal-add-input" id="goalName" placeholder="Goal name">
-      <input class="goal-add-input" type="number" id="goalTarget" placeholder="Target" style="width:80px;flex:none" min="1">
-      <input class="goal-add-input" type="number" id="goalCurrent" placeholder="Current" style="width:80px;flex:none" min="0">
-      <button class="btn-add" onclick="addGoal()" style="font-size:12px;padding:7px 12px">Add</button>
+    <div class="goal-add">
+      <input class="inp" id="goalName" placeholder="Goal name">
+      <input class="inp" type="number" id="goalTarget" placeholder="Target" style="width:75px;flex:none" min="1">
+      <input class="inp" type="number" id="goalCurrent" placeholder="Now" style="width:65px;flex:none" min="0">
+      <button class="btn-add" onclick="addGoal()">Add</button>
     </div>
   </div>
-
 </div>
 
-<!-- ── RIGHT COLUMN ─────────────────────────────────────────────────────── -->
-<div class="right-col">
-
-  <!-- MARKET WIDGET -->
+<!-- RIGHT -->
+<div>
   <div class="card">
-    <div class="card-title"><span>📊 Market Snapshot</span><span style="font-size:10px;color:var(--tx3)">Last close</span></div>
+    <div class="card-title"><span>📊 Market Snapshot</span><span style="font-size:10px;color:var(--tx3)">Fri close</span></div>
     <div id="marketWidget"></div>
-    <a class="view-all" href="https://jordan828.github.io/jordan-dashboard/" target="_blank">View full dashboard ↗</a>
+    <a class="view-all" href="https://jordan828.github.io/jordan-dashboard/" target="_blank">Open full dashboard ↗</a>
   </div>
 
-  <!-- QUICK LINKS -->
   <div class="card">
-    <div class="card-title"><span>🔗 Quick Links</span></div>
-    <div id="quickLinks" style="display:flex;flex-direction:column;gap:6px"></div>
-    <div style="display:flex;gap:8px;margin-top:10px">
-      <input class="task-input" id="linkLabel" placeholder="Label" style="width:90px;flex:none">
-      <input class="task-input" id="linkUrl" placeholder="https://">
+    <div class="card-title">🔗 Quick Links</div>
+    <div id="quickLinks"></div>
+    <div class="link-add">
+      <input class="inp" id="linkLabel" placeholder="Label" style="width:90px;flex:none">
+      <input class="inp" id="linkUrl" placeholder="URL">
       <button class="btn-add" onclick="addLink()">Add</button>
     </div>
   </div>
 
-  <!-- WEEKLY SUMMARY CHART -->
   <div class="card">
-    <div class="card-title"><span>📈 Weekly Productivity</span></div>
-    <div style="height:160px;position:relative"><canvas id="prodChart"></canvas></div>
+    <div class="card-title">📈 Weekly Productivity</div>
+    <div style="height:150px;position:relative"><canvas id="prodChart"></canvas></div>
   </div>
+</div>
 
-</div>
-</div>
+</div><!-- end layout -->
 
 <script>
-// ── STORAGE HELPERS ──────────────────────────────────────────────────────────
-const S = {
-  get: k => { try { return JSON.parse(localStorage.getItem('jcc_'+k)); } catch{ return null; } },
-  set: (k,v) => localStorage.setItem('jcc_'+k, JSON.stringify(v)),
-};
+// ── THEME ────────────────────────────────────────────────────────────────────
+let theme = localStorage.getItem('jcc_theme') || 'dark';
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('themeBtn').textContent = t==='dark' ? '☀️ Light' : '🌙 Dark';
+  localStorage.setItem('jcc_theme', t);
+}
+function toggleTheme() { theme = theme==='dark'?'light':'dark'; applyTheme(theme); }
+applyTheme(theme);
+
+// ── STORAGE ───────────────────────────────────────────────────────────────────
+const S = { get:k=>{try{return JSON.parse(localStorage.getItem('jcc_'+k));}catch{return null;}}, set:(k,v)=>localStorage.setItem('jcc_'+k,JSON.stringify(v)) };
 const today = new Date().toISOString().slice(0,10);
 
-// ── CLOCK & MARKET STATUS ────────────────────────────────────────────────────
+// ── CLOCK & MARKET ────────────────────────────────────────────────────────────
 function updateClock() {
-  const now = new Date();
-  const myt = new Date(now.toLocaleString('en-US',{timeZone:'Asia/Kuala_Lumpur'}));
-  const est = new Date(now.toLocaleString('en-US',{timeZone:'America/New_York'}));
-  document.getElementById('clockDisplay').innerHTML =
-    '<b>' + myt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true}) + '</b> MYT';
-
-  const day = est.getDay(), h = est.getHours(), m = est.getMinutes();
-  const mins = h*60+m;
-  const isOpen = day>=1 && day<=5 && mins>=570 && mins<960; // 9:30AM-4PM EST
-  const pill = document.getElementById('marketPill');
-  const dot  = document.getElementById('marketDot');
-  const stat = document.getElementById('marketStatus');
-  if (isOpen) {
-    pill.className = 'market-pill market-open';
-    dot.style.background = 'var(--green)';
-    stat.textContent = 'Market Open';
-  } else {
-    pill.className = 'market-pill market-closed';
-    dot.style.background = 'var(--amber)';
-    stat.textContent = 'Market Closed';
-  }
+  const myt = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Kuala_Lumpur'}));
+  const est = new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'}));
+  document.getElementById('clockDisplay').innerHTML = '<b>'+myt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true})+'</b> MYT';
+  const day=est.getDay(),mins=est.getHours()*60+est.getMinutes();
+  const open=day>=1&&day<=5&&mins>=570&&mins<960;
+  const pill=document.getElementById('marketPill');
+  document.getElementById('marketDot').style.background=open?'var(--green)':'var(--amber)';
+  pill.className='market-pill '+(open?'market-open':'market-closed');
+  document.getElementById('marketStatus').textContent=open?'Market Open':'Market Closed';
 }
-setInterval(updateClock, 1000); updateClock();
+setInterval(updateClock,1000); updateClock();
 
-// ── FOCUS ────────────────────────────────────────────────────────────────────
-const focusInput = document.getElementById('focusInput');
-focusInput.value = S.get('focus_'+today) || '';
-focusInput.addEventListener('input', () => {
-  S.set('focus_'+today, focusInput.value);
-  document.getElementById('focusSub').textContent = focusInput.value ? '✓ Saved for today' : 'Press Enter to save';
-});
+// ── FOCUS ─────────────────────────────────────────────────────────────────────
+const fi=document.getElementById('focusInput');
+fi.value=S.get('focus_'+today)||'';
+fi.addEventListener('input',()=>{S.set('focus_'+today,fi.value);document.getElementById('focusSub').textContent=fi.value?'✓ Saved':'Type and it saves automatically';});
 
-// ── TASKS ────────────────────────────────────────────────────────────────────
-let tasks = S.get('tasks') || [];
-function saveTasks() { S.set('tasks', tasks); renderTasks(); updateStats(); }
-function addTask() {
-  const txt = document.getElementById('taskInput').value.trim();
-  const pri = document.getElementById('taskPriority').value;
-  if (!txt) return;
-  tasks.unshift({id:Date.now(), text:txt, priority:pri, done:false, date:today});
-  document.getElementById('taskInput').value = '';
+// ── TASKS ─────────────────────────────────────────────────────────────────────
+let tasks=S.get('tasks')||[];
+function saveTasks(){S.set('tasks',tasks);renderTasks();updateStats();}
+function addTask(){
+  const txt=document.getElementById('taskInput').value.trim();
+  const pri=document.getElementById('taskPriority').value;
+  if(!txt)return;
+  tasks.unshift({id:Date.now(),text:txt,priority:pri,done:false});
+  document.getElementById('taskInput').value='';
   saveTasks();
 }
-function toggleTask(id) {
-  const t = tasks.find(t=>t.id===id); if(t) t.done = !t.done; saveTasks();
-}
-function deleteTask(id) { tasks = tasks.filter(t=>t.id!==id); saveTasks(); }
-function renderTasks() {
-  const el = document.getElementById('taskList');
-  const priColor = {high:'p-high',medium:'p-medium',low:'p-low'};
-  const priLabel = {high:'High',medium:'Med',low:'Low'};
-  const sorted = [...tasks].sort((a,b)=>{
-    if(a.done!==b.done) return a.done?1:-1;
-    const order={high:0,medium:1,low:2};
-    return order[a.priority]-order[b.priority];
-  });
-  el.innerHTML = sorted.map(t => `
-    <div class="task-item ${t.done?'done':''}">
-      <input type="checkbox" class="task-check" ${t.done?'checked':''} onchange="toggleTask(${t.id})">
+function toggleTask(id){const t=tasks.find(t=>t.id===id);if(t)t.done=!t.done;saveTasks();}
+function deleteTask(id){tasks=tasks.filter(t=>t.id!==id);saveTasks();}
+function renderTasks(){
+  const pc={high:'p-high',medium:'p-medium',low:'p-low'};
+  const pl={high:'H',medium:'M',low:'L'};
+  const sorted=[...tasks].sort((a,b)=>{if(a.done!==b.done)return a.done?1:-1;const o={high:0,medium:1,low:2};return o[a.priority]-o[b.priority];});
+  document.getElementById('taskList').innerHTML=sorted.map(t=>`
+    <div class="task-item${t.done?' done':''}">
+      <input type="checkbox" class="task-check"${t.done?' checked':''} onchange="toggleTask(${t.id})">
       <span class="task-text">${t.text}</span>
-      <span class="task-badge ${priColor[t.priority]}">${priLabel[t.priority]}</span>
-      <button class="task-del" onclick="deleteTask(${t.id})">✕</button>
+      <span class="task-badge ${pc[t.priority]}">${pl[t.priority]}</span>
+      <button class="del-btn" onclick="deleteTask(${t.id})">✕</button>
     </div>`).join('');
-  const left = tasks.filter(t=>!t.done).length;
-  document.getElementById('taskCount').textContent = left + ' left';
+  const left=tasks.filter(t=>!t.done).length;
+  document.getElementById('taskCount').textContent=left+' left';
 }
-document.getElementById('taskInput').addEventListener('keydown', e => { if(e.key==='Enter') addTask(); });
+document.getElementById('taskInput').addEventListener('keydown',e=>{if(e.key==='Enter')addTask();});
 renderTasks();
 
-// ── REMINDERS ────────────────────────────────────────────────────────────────
-let reminders = S.get('reminders') || [];
-function saveReminders() { S.set('reminders', reminders); renderReminders(); }
-function addReminder() {
-  const txt  = document.getElementById('reminderInput').value.trim();
-  const time = document.getElementById('reminderTime').value;
-  if (!txt) return;
-  reminders.push({id:Date.now(), text:txt, time:time||'—'});
+// ── REMINDERS ─────────────────────────────────────────────────────────────────
+let reminders=S.get('reminders')||[];
+function saveReminders(){S.set('reminders',reminders);renderReminders();}
+function addReminder(){
+  const txt=document.getElementById('reminderInput').value.trim();
+  const time=document.getElementById('reminderTime').value;
+  if(!txt)return;
+  reminders.push({id:Date.now(),text:txt,time:time||'—'});
   reminders.sort((a,b)=>a.time.localeCompare(b.time));
-  document.getElementById('reminderInput').value = '';
-  document.getElementById('reminderTime').value = '';
+  document.getElementById('reminderInput').value='';
+  document.getElementById('reminderTime').value='';
   saveReminders();
 }
-function deleteReminder(id) { reminders = reminders.filter(r=>r.id!==id); saveReminders(); }
-function renderReminders() {
-  document.getElementById('reminderList').innerHTML = reminders.length
-    ? reminders.map(r=>`
-        <div class="reminder-item">
-          <span class="reminder-time-badge">${r.time}</span>
-          <span class="reminder-text">${r.text}</span>
-          <button class="reminder-del" onclick="deleteReminder(${r.id})">✕</button>
-        </div>`).join('')
-    : '<div style="color:var(--tx3);font-size:12px;padding:8px 0">No reminders yet</div>';
+function deleteReminder(id){reminders=reminders.filter(r=>r.id!==id);saveReminders();}
+function renderReminders(){
+  document.getElementById('reminderList').innerHTML=reminders.length
+    ?reminders.map(r=>`<div class="reminder-item"><span class="r-time">${r.time}</span><span class="r-text">${r.text}</span><button class="del-btn" onclick="deleteReminder(${r.id})">✕</button></div>`).join('')
+    :'<div style="color:var(--tx3);font-size:12px;padding:6px 0">No reminders yet</div>';
 }
-document.getElementById('reminderInput').addEventListener('keydown', e => { if(e.key==='Enter') addReminder(); });
+document.getElementById('reminderInput').addEventListener('keydown',e=>{if(e.key==='Enter')addReminder();});
 renderReminders();
 
-// Check reminders every minute
-function checkReminders() {
-  const now = new Date();
-  const hhmm = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-  reminders.forEach(r => {
-    if(r.time===hhmm && !r.notified) {
-      r.notified = true;
-      if(Notification.permission==='granted') new Notification('⏰ Reminder', {body:r.text});
-      else alert('⏰ Reminder: ' + r.text);
-      saveReminders();
-    }
-  });
+// ── NOTES ─────────────────────────────────────────────────────────────────────
+let currentNote=0;
+const noteArea=document.getElementById('noteArea');
+noteArea.value=S.get('note_0')||'';
+function switchNote(idx,btn){saveNote(true);currentNote=idx;noteArea.value=S.get('note_'+idx)||'';document.querySelectorAll('.note-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function saveNote(silent=false){
+  S.set('note_'+currentNote,noteArea.value);
+  if(!silent){const el=document.getElementById('noteSaved');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2000);}
 }
-if(Notification.permission==='default') Notification.requestPermission();
-setInterval(checkReminders, 30000);
+noteArea.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveNote();}});
+setInterval(()=>saveNote(true),10000);
 
-// ── NOTES ────────────────────────────────────────────────────────────────────
-let currentNote = 0;
-const noteArea = document.getElementById('noteArea');
-noteArea.value = S.get('note_'+currentNote) || '';
-function switchNote(idx, btn) {
-  saveNote(true);
-  currentNote = idx;
-  noteArea.value = S.get('note_'+idx) || '';
-  document.querySelectorAll('.note-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+// ── HABITS ────────────────────────────────────────────────────────────────────
+let habits=S.get('habits')||[{id:1,name:'Exercise',color:'#00c98d'},{id:2,name:'Read 30min',color:'#4d9fff'},{id:3,name:'No junk food',color:'#a78bfa'}];
+let habitLogs=S.get('habitLogs')||{};
+function saveHabits(){S.set('habits',habits);S.set('habitLogs',habitLogs);renderHabits();updateStats();}
+function toggleHabit(hid,offset){habitLogs[hid+'_'+offset]=!habitLogs[hid+'_'+offset];saveHabits();}
+function deleteHabit(hid){habits=habits.filter(h=>h.id!==hid);saveHabits();}
+function addHabit(){
+  const name=document.getElementById('habitInput').value.trim();if(!name)return;
+  const colors=['#00c98d','#4d9fff','#a78bfa','#f5a623','#ff4d6a'];
+  habits.push({id:Date.now(),name,color:colors[habits.length%colors.length]});
+  document.getElementById('habitInput').value='';saveHabits();
 }
-function saveNote(silent=false) {
-  S.set('note_'+currentNote, noteArea.value);
-  if (!silent) {
-    const el = document.getElementById('noteSaved');
-    el.classList.add('show');
-    setTimeout(()=>el.classList.remove('show'), 2000);
-  }
-}
-noteArea.addEventListener('keydown', e => { if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveNote();} });
-setInterval(()=>saveNote(true), 10000); // auto-save every 10s
-
-// ── HABITS ───────────────────────────────────────────────────────────────────
-let habits = S.get('habits') || [
-  {id:1, name:'Exercise',    color:'#00c98d'},
-  {id:2, name:'Read 30min',  color:'#4d9fff'},
-  {id:3, name:'No junk food',color:'#a78bfa'},
-];
-let habitLogs = S.get('habitLogs') || {};
-
-function saveHabits() { S.set('habits', habits); S.set('habitLogs', habitLogs); renderHabits(); updateStats(); }
-function toggleHabit(hid, dayOffset) {
-  const key = hid+'_'+dayOffset;
-  habitLogs[key] = !habitLogs[key];
-  saveHabits();
-}
-function deleteHabit(hid) { habits = habits.filter(h=>h.id!==hid); saveHabits(); }
-function addHabit() {
-  const name = document.getElementById('habitInput').value.trim();
-  if (!name) return;
-  const colors = ['#00c98d','#4d9fff','#a78bfa','#f5a623','#ff4d6a'];
-  habits.push({id:Date.now(), name, color:colors[habits.length%colors.length]});
-  document.getElementById('habitInput').value = '';
-  saveHabits();
-}
-function renderHabits() {
-  const days = 7;
-  const todayDate = new Date();
-  document.getElementById('habitDate').textContent = 'Last 7 days';
-  document.getElementById('habitGrid').innerHTML = habits.map(h => {
-    const dots = Array.from({length:days},(_,i)=>{
-      const offset = i-days+1;
-      const done = habitLogs[h.id+'_'+offset];
-      return `<div class="habit-dot${done?' done':''}" style="${done?'background:'+h.color+';border-color:'+h.color:''}" onclick="toggleHabit(${h.id},${offset})" title="${offset===0?'Today':offset===-1?'Yesterday':Math.abs(offset)+'d ago'}"></div>`;
+function renderHabits(){
+  document.getElementById('habitGrid').innerHTML=habits.map(h=>{
+    const dots=Array.from({length:7},(_,i)=>{
+      const off=i-6;const done=habitLogs[h.id+'_'+off];
+      return `<div class="habit-dot${done?' done':''}" style="${done?'background:'+h.color+';border-color:'+h.color:''}" onclick="toggleHabit(${h.id},${off})" title="${off===0?'Today':off===-1?'Yesterday':Math.abs(off)+'d ago'}"></div>`;
     }).join('');
-    const streak = (() => {
-      let s=0; for(let i=0;i>=-(days-1);i--){ if(habitLogs[h.id+'_'+i]) s++; else break; } return s;
-    })();
-    return `<div class="habit-row">
-      <span class="habit-name" style="color:${h.color}">${h.name.slice(0,14)}</span>
-      <div class="habit-dots">${dots}</div>
-      <span class="habit-streak">🔥${streak}</span>
-      <button onclick="deleteHabit(${h.id})" style="background:none;color:var(--tx3);font-size:12px;margin-left:4px">✕</button>
-    </div>`;
+    let streak=0;for(let i=0;i>=- 6;i--){if(habitLogs[h.id+'_'+i])streak++;else break;}
+    return `<div class="habit-row"><span class="habit-name" style="color:${h.color}">${h.name}</span><div class="habit-dots">${dots}</div><span class="habit-streak">🔥${streak}</span><button onclick="deleteHabit(${h.id})" class="del-btn">✕</button></div>`;
   }).join('');
 }
-document.getElementById('habitInput').addEventListener('keydown', e=>{ if(e.key==='Enter') addHabit(); });
+document.getElementById('habitInput').addEventListener('keydown',e=>{if(e.key==='Enter')addHabit();});
 renderHabits();
 
-// ── GOALS ────────────────────────────────────────────────────────────────────
-let goals = S.get('goals') || [
-  {id:1, name:'Save $10,000', current:3200,  target:10000, color:'#00c98d'},
-  {id:2, name:'Read 24 books', current:7,    target:24,    color:'#4d9fff'},
-  {id:3, name:'Ship 5 projects',current:2,   target:5,     color:'#a78bfa'},
-];
-function saveGoals() { S.set('goals', goals); renderGoals(); updateStats(); }
-function addGoal() {
-  const name = document.getElementById('goalName').value.trim();
-  const target = parseInt(document.getElementById('goalTarget').value);
-  const current = parseInt(document.getElementById('goalCurrent').value) || 0;
-  if(!name || !target) return;
-  const colors = ['#00c98d','#4d9fff','#a78bfa','#f5a623','#ff4d6a'];
-  goals.push({id:Date.now(), name, current, target, color:colors[goals.length%colors.length]});
-  document.getElementById('goalName').value='';
-  document.getElementById('goalTarget').value='';
-  document.getElementById('goalCurrent').value='';
+// ── GOALS ─────────────────────────────────────────────────────────────────────
+let goals=S.get('goals')||[{id:1,name:'Save $10,000',current:3200,target:10000,color:'#00c98d'},{id:2,name:'Read 24 books',current:7,target:24,color:'#4d9fff'},{id:3,name:'Ship 5 projects',current:2,target:5,color:'#a78bfa'}];
+function saveGoals(){S.set('goals',goals);renderGoals();updateStats();}
+function addGoal(){
+  const name=document.getElementById('goalName').value.trim();
+  const target=parseInt(document.getElementById('goalTarget').value);
+  const current=parseInt(document.getElementById('goalCurrent').value)||0;
+  if(!name||!target)return;
+  const colors=['#00c98d','#4d9fff','#a78bfa','#f5a623','#ff4d6a'];
+  goals.push({id:Date.now(),name,current,target,color:colors[goals.length%colors.length]});
+  document.getElementById('goalName').value='';document.getElementById('goalTarget').value='';document.getElementById('goalCurrent').value='';
   saveGoals();
 }
-function deleteGoal(id) { goals=goals.filter(g=>g.id!==id); saveGoals(); }
-function updateGoalProgress(id, val) {
-  const g = goals.find(g=>g.id===id);
-  if(g) { g.current = Math.min(g.target, Math.max(0, parseInt(val)||0)); saveGoals(); }
-}
-function renderGoals() {
-  document.getElementById('goalList').innerHTML = goals.map(g => {
-    const pct = Math.min(100, Math.round(g.current/g.target*100));
-    return `<div class="goal-item">
-      <div class="goal-header">
-        <span class="goal-name">${g.name}</span>
-        <span class="goal-pct" style="color:${g.color}">${pct}%</span>
-      </div>
-      <div class="goal-bar"><div class="goal-fill" style="width:${pct}%;background:${g.color}"></div></div>
-      <div class="goal-meta">
-        <span><input type="number" value="${g.current}" onchange="updateGoalProgress(${g.id},this.value)" style="background:transparent;border:none;color:var(--tx2);width:60px;font-size:10px"> / ${g.target}</span>
-        <button onclick="deleteGoal(${g.id})" style="background:none;color:var(--tx3);font-size:11px">✕</button>
-      </div>
-    </div>`;
+function deleteGoal(id){goals=goals.filter(g=>g.id!==id);saveGoals();}
+function updateGoalProgress(id,val){const g=goals.find(g=>g.id===id);if(g){g.current=Math.min(g.target,Math.max(0,parseInt(val)||0));saveGoals();}}
+function renderGoals(){
+  document.getElementById('goalList').innerHTML=goals.map(g=>{
+    const pct=Math.min(100,Math.round(g.current/g.target*100));
+    return `<div class="goal-item"><div class="goal-hdr"><span class="goal-nm">${g.name}</span><span class="goal-pc" style="color:${g.color}">${pct}%</span></div><div class="goal-bar"><div class="goal-fill" style="width:${pct}%;background:${g.color}"></div></div><div class="goal-meta"><span><input type="number" value="${g.current}" onchange="updateGoalProgress(${g.id},this.value)" style="color:var(--tx2)"> / ${g.target}</span><button onclick="deleteGoal(${g.id})" class="del-btn">✕</button></div></div>`;
   }).join('');
 }
 renderGoals();
 
+// ── MARKET WIDGET ─────────────────────────────────────────────────────────────
+const STOCKS=[{sym:'NVDA',name:'NVIDIA',price:202.78,pct:-0.66},{sym:'AAPL',name:'Apple',price:316.22,pct:0.90},{sym:'META',name:'Meta',price:631.48,pct:4.70},{sym:'MU',name:'Micron',price:991.64,pct:4.52},{sym:'PLTR',name:'Palantir',price:134.50,pct:1.72}];
+document.getElementById('marketWidget').innerHTML=STOCKS.map(s=>`
+  <a href="https://jordan828.github.io/jordan-dashboard/" target="_blank" style="text-decoration:none;display:block">
+  <div class="mkt-row">
+    <div><div class="mkt-sym">${s.sym}</div><div class="mkt-nm">${s.name}</div></div>
+    <div style="text-align:right"><div class="mkt-price">$${s.price.toLocaleString('en-US',{minimumFractionDigits:2})}</div><span class="mkt-chg ${s.pct>=0?'mkt-up':'mkt-dn'}">${s.pct>=0?'▲':'▼'} ${Math.abs(s.pct).toFixed(2)}%</span></div>
+  </div></a>`).join('');
+
 // ── QUICK LINKS ───────────────────────────────────────────────────────────────
-let links = S.get('links') || [
-  {id:1, label:'Market Briefing', url:'https://jordan828.github.io/jordan-dashboard/'},
-  {id:2, label:'GitHub',          url:'https://github.com/jordan828'},
-  {id:3, label:'FMP Dashboard',   url:'https://financialmodelingprep.com/financial-summary/NVDA'},
-];
-function saveLinks() { S.set('links', links); renderLinks(); }
-function addLink() {
-  const label = document.getElementById('linkLabel').value.trim();
-  let url = document.getElementById('linkUrl').value.trim();
-  if(!label||!url) return;
-  if(!url.startsWith('http')) url='https://'+url;
+let links=S.get('links')||[{id:1,label:'Market Briefing',url:'https://jordan828.github.io/jordan-dashboard/'},{id:2,label:'GitHub',url:'https://github.com/jordan828'},{id:3,label:'FMP',url:'https://financialmodelingprep.com'}];
+function saveLinks(){S.set('links',links);renderLinks();}
+function addLink(){
+  const label=document.getElementById('linkLabel').value.trim();
+  let url=document.getElementById('linkUrl').value.trim();
+  if(!label||!url)return;
+  if(!url.startsWith('http'))url='https://'+url;
   links.push({id:Date.now(),label,url});
-  document.getElementById('linkLabel').value='';
-  document.getElementById('linkUrl').value='';
+  document.getElementById('linkLabel').value='';document.getElementById('linkUrl').value='';
   saveLinks();
 }
-function deleteLink(id) { links=links.filter(l=>l.id!==id); saveLinks(); }
-function renderLinks() {
-  document.getElementById('quickLinks').innerHTML = links.map(l=>
-    `<div style="display:flex;align-items:center;gap:8px">
-      <a href="${l.url}" target="_blank" style="flex:1;padding:8px 10px;background:var(--card2);border-radius:var(--r2);border:1px solid var(--border2);color:var(--tx);font-size:12px;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--border2)'">
-        🔗 ${l.label}
-      </a>
-      <button onclick="deleteLink(${l.id})" style="background:none;color:var(--tx3);font-size:13px">✕</button>
-    </div>`
-  ).join('');
+function deleteLink(id){links=links.filter(l=>l.id!==id);saveLinks();}
+function renderLinks(){
+  document.getElementById('quickLinks').innerHTML=links.map(l=>`
+    <div class="link-item">
+      <a class="link-a" href="${l.url}" target="_blank">🔗 ${l.label}</a>
+      <button onclick="deleteLink(${l.id})" class="del-btn">✕</button>
+    </div>`).join('');
 }
 renderLinks();
 
-// ── MARKET WIDGET ─────────────────────────────────────────────────────────────
-const STOCKS = [
-  {sym:'NVDA', name:'NVIDIA',      price:202.78, pct:-0.66},
-  {sym:'AAPL', name:'Apple',       price:316.22, pct: 0.90},
-  {sym:'META', name:'Meta',        price:631.48, pct: 4.70},
-  {sym:'MU',   name:'Micron',      price:991.64, pct: 4.52},
-  {sym:'PLTR', name:'Palantir',    price:134.50, pct: 1.72},
-];
-document.getElementById('marketWidget').innerHTML = STOCKS.map(s=>`
-  <a href="https://jordan828.github.io/jordan-dashboard/" target="_blank" style="text-decoration:none">
-  <div class="market-row">
-    <div class="mkt-left">
-      <span class="mkt-sym">${s.sym}</span>
-      <span class="mkt-name">${s.name}</span>
-    </div>
-    <div class="mkt-right">
-      <span class="mkt-price">$${s.price.toLocaleString('en-US',{minimumFractionDigits:2})}</span>
-      <span class="mkt-chg ${s.pct>=0?'mkt-up':'mkt-dn'}">${s.pct>=0?'▲':'▼'} ${Math.abs(s.pct).toFixed(2)}%</span>
-    </div>
-  </div></a>`).join('');
-
-// ── WEEKLY PRODUCTIVITY CHART ─────────────────────────────────────────────────
-const days7 = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const taskData   = days7.map(()=>Math.floor(Math.random()*6+1));
-const habitData  = days7.map(()=>Math.floor(Math.random()*3+1));
+// ── WEEKLY CHART ──────────────────────────────────────────────────────────────
+const days7=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 new Chart(document.getElementById('prodChart'),{
   type:'bar',
   data:{labels:days7,datasets:[
-    {label:'Tasks',data:taskData,backgroundColor:'rgba(77,159,255,.7)',borderRadius:4},
-    {label:'Habits',data:habitData,backgroundColor:'rgba(0,201,141,.7)',borderRadius:4},
+    {label:'Tasks',data:days7.map(()=>Math.floor(Math.random()*6+1)),backgroundColor:'rgba(77,159,255,.7)',borderRadius:4},
+    {label:'Habits',data:days7.map(()=>Math.floor(Math.random()*3+1)),backgroundColor:'rgba(0,201,141,.7)',borderRadius:4},
   ]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:'#8b90a7',font:{size:10},boxWidth:10}}},
-    scales:{
-      x:{grid:{display:false},ticks:{color:'#8b90a7',font:{size:10}}},
-      y:{grid:{color:'rgba(37,42,58,.6)'},ticks:{color:'#8b90a7',font:{size:10},stepSize:2}}
-    }
-  }
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8b90a7',font:{size:10},boxWidth:8}}},scales:{x:{grid:{display:false},ticks:{color:'#8b90a7',font:{size:10}}},y:{grid:{color:'rgba(100,100,120,.15)'},ticks:{color:'#8b90a7',font:{size:10},stepSize:2}}}}
 });
 
-// ── STATS UPDATE ──────────────────────────────────────────────────────────────
-function updateStats() {
-  const done = tasks.filter(t=>t.done).length;
-  document.getElementById('statTasks').textContent = done;
-  const habitsToday = habits.filter(h=>habitLogs[h.id+'_0']).length;
-  document.getElementById('statHabits').textContent = habitsToday+'/'+habits.length;
-  const avg = goals.length ? Math.round(goals.reduce((a,g)=>a+Math.min(100,g.current/g.target*100),0)/goals.length) : 0;
-  document.getElementById('statGoals').textContent = avg+'%';
+// ── STATS ─────────────────────────────────────────────────────────────────────
+function updateStats(){
+  document.getElementById('statTasks').textContent=tasks.filter(t=>t.done).length;
+  const hToday=habits.filter(h=>habitLogs[h.id+'_0']).length;
+  document.getElementById('statHabits').textContent=hToday+'/'+habits.length;
+  const avg=goals.length?Math.round(goals.reduce((a,g)=>a+Math.min(100,g.current/g.target*100),0)/goals.length):0;
+  document.getElementById('statGoals').textContent=avg+'%';
 }
 updateStats();
 </script>
